@@ -47,6 +47,8 @@ constructor(private route:ActivatedRoute,private service:CitasService) {
         this.servicio=data.servicio
         this.sucursal=data.sucursal
         this.mascota=data.mascota
+        console.log(data);
+        
         })
       }
     });

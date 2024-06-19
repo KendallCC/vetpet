@@ -14,7 +14,7 @@
             <mat-list-item><Strong>Motivo: </Strong>{{ cita.motivo }}</mat-list-item>
             <mat-list-item><Strong>Observaciones: </Strong>{{ cita.observaciones }}</mat-list-item>
             <mat-list-item><Strong>Vacunas: </Strong>{{ cita.vacunas }}</mat-list-item>
-            <mat-list-item><Strong>Fecha y Hora: </Strong>{{ cita.fecha_cita | date: 'MMMM d, y, h:mm:ss aaaa' }}</mat-list-item>
+            <mat-list-item><Strong>Fecha y Hora: </Strong>{{ cita.hora_cita | date: 'MMMM d, y, h:mm aaaa' }}</mat-list-item>
           </mat-list>
         </mat-tab>
         <mat-tab label="Cliente">

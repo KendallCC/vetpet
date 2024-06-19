@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <img src="../../../assets/Logo.png" alt="Logo" style="height: 50px;">
+  <span class="toolbar-title vetpet" (click)="irinicio()">VetPet</span>
+  <span class="example-spacer"></span>
+  <span mat-button  class="options">Servicios</span>
+
+  <span class="example-spacer"></span>
+  <span mat-button class="options" (click)="irProducto()">Productos</span>
+
+  <span class="example-spacer"></span>
+  <span mat-button  class="options" (click)="irAcerca()">Acerca de Nosotros</span>
+
+  <span class="example-spacer"></span>
+  <span mat-button [matMenuTriggerFor]="menu2" class="options" >Encargado</span>
+  <mat-menu #menu2="matMenu">
+    <button mat-menu-item (click)="irFactura()">Facturacion</button>
+    <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,37 @@
+.centrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.Pendiente {
+    color: #FFA500; /* Naranja */
+  text-align: center;
+    font-weight: bold;
+  }
+  .Confirmada {
+    color: #28a745; /* Verde */
+    text-align: center;
+    font-weight: bold;
+  }
+  .Reprogramada {
+    color: #17a2b8; /* Azul claro */
+    text-align: center;
+    font-weight: bold;
+  }
+  .Completada {
+    color: #6c757d; /* Gris */
+    text-align: center;
+    font-weight: bold;
+  }
+ .Cancelada  {
+    color: #dc3545; /* Rojo */
+    text-align: center;
+    font-weight: bold;
+  }
+  .No_asistio {
+    color: #3f3440; /* Negro */
+    text-align: center;
+    font-weight: bold;
+  }

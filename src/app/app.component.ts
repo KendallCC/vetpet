@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalService } from './share/services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'vetpet';
+
+  idEncargado: number = 3;
+
+ constructor(private globalService:GlobalService){
+  this.actualizarVariableGlobal(this.idEncargado)
+ }
+
+
+ actualizarVariableGlobal(numero:Number) {
+  this.globalService.setVariableGlobal(numero);
+}
+
+
 }

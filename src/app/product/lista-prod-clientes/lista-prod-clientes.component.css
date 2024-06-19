@@ -1,0 +1,201 @@
+/* mat-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  mat-card-content {
+    flex-grow: 1;
+  }
+
+  mat-grid-list {
+    margin: 20px;
+  }
+   */
+/*    
+   mat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 16px rgba(0,0,0,0.2);
+    }
+  }
+  
+  mat-card-header {
+    background-color: rgba(0, 150, 136, 0.1);
+  }
+  
+  .price {
+    font-weight: bold;
+    color: #009688;
+  }
+  
+  mat-card-image {
+    height: 200px;
+    object-fit: cover;
+  } 
+
+
+  .Btn {
+    width: 140px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
+    background-size: 250%;
+    background-position: left;
+    color: #ffd277;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition-duration: 1s;
+    overflow: hidden;
+  }
+  
+  .Btn::before {
+    position: absolute;
+    content: "Ver mas";
+    color: #ffd277;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 97%;
+    height: 90%;
+    border-radius: 8px;
+    transition-duration: 1s;
+    background-color: rgba(0, 0, 0, 0.842);
+    background-size: 200%;
+  }
+  
+  .Btn:hover {
+    background-position: right;
+    transition-duration: 1s;
+  }
+  
+  .Btn:hover::before {
+    background-position: right;
+    transition-duration: 1s;
+  }
+  
+  .Btn:active {
+    transform: scale(0.95);
+  } 
+
+
+ */
+ .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 5rem;
+}
+
+.about-section {
+  text-align: center;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #3f51b5;
+  font-size: 3rem;
+}
+
+.about-section p{
+  font-size: 2rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px;
+  font-size: 16px;
+}
+
+
+  .card {
+    width: 190px;
+    height: 254px;
+    border-radius: 20px;
+    background: #f5f5f5;
+    position: relative;
+    padding: 1.8rem;
+    border: 2px solid #c3c6ce;
+    transition: 0.5s ease-out;
+    overflow: visible;
+    margin: 0 auto;
+    margin-bottom: 7rem;
+   }
+   
+   .card-details {
+    color: black;
+    height: 100%;
+    gap: .5em;
+    display: grid;
+    place-content: center;
+   }
+   
+   .card-button {
+    transform: translate(-50%, 125%);
+    width: 60%;
+    border-radius: 1rem;
+    border: none;
+    background-color: #008bf8;
+    color: #fff;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.3s ease-out;
+   }
+   
+   .text-body {
+    color: rgb(134, 134, 134);
+   }
+   
+   /*Text*/
+   .text-title {
+    font-size: 1.5em;
+    font-weight: bold;
+   }
+   
+   /*Hover*/
+   .card:hover {
+    border-color: #008bf8;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+   }
+   
+   .card:hover .card-button {
+    transform: translate(-50%, 50%);
+    opacity: 1;
+   }
+
+   @media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+
+    .card {
+        margin: 0 auto; /* Centrar la tarjeta si es necesario */
+        max-width: 100%; /* Asegura que la tarjeta no sobrepase el ancho de la pantalla */
+        margin-bottom: 7rem;
+    }
+
+    .card-button {
+        width: 80%; /* Ajusta el ancho del botón dentro de la tarjeta */
+        transform: translate(-50%, -50%); /* Ajustar la posición del botón */
+    }
+}

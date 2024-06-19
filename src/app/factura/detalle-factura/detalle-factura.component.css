@@ -1,0 +1,111 @@
+/* factura.component.css */
+.factura-card {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 5rem;
+    margin-bottom: 100rem;
+  }
+  
+  .factura-section {
+    margin-bottom: 20px;
+  }
+  
+  .encabezado-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .encabezado-columna {
+    margin: 0 20px; /* Espacio entre columnas */
+    flex: 1; /* Ocupa el espacio disponible */
+    max-width: 400px; /* Ancho máximo de cada columna */
+  }
+  
+  .encabezado-columna p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  mat-card-title {
+    color: #333;
+  }
+  
+  mat-card-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  mat-table {
+    width: 100%;
+  }
+  
+  th.mat-header-cell, td.mat-cell {
+    padding: 8px 16px;
+  }
+  
+  mat-list-item {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .factura-totales h3 {
+    margin-top: 20px;
+  }
+
+  .mat-card-content .mat-table .mat-header-cell, 
+  .mat-card-content .mat-table .mat-cell {
+    text-align: center; /* Centra el texto de las celdas y cabeceras */
+    padding: 16px; /* Aumenta el padding para más espacio entre celdas */
+  }
+  
+  .mat-card-content .mat-table {
+    width: 100%; /* Asegura que la tabla use todo el ancho disponible */
+  }
+  
+  .mat-card-content .mat-table .mat-header-row {
+    height: 64px; /* Aumenta la altura de las filas de cabecera */
+  }
+
+
+  .mdc-data-table__cell {
+    text-align: center;
+   
+}
+
+
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  text-align: center;
+}
+
+
+/* .mat-mdc-header-cell {
+ background-color: aqua;
+} */
+
+
+
+
+.mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell{
+  padding: 1rem;
+}
+
+
+.mat-mdc-header-cell {
+  font-weight: bolder;
+  margin: 0 auto;
+}
+
+.contenedor{ 
+  display: flex; justify-content: center
+}
+
+
+.detalleFinal{
+font-weight: bold;
+}
+
+.separador{
+  padding-bottom: 5rem;
+}

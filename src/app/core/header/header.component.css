@@ -1,0 +1,29 @@
+.toolbar-title {
+ 
+  margin-left: 1rem;
+}
+
+.example-spacer {
+  flex: 1 auto;
+}
+
+.options{
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 0.99rem;
+}
+
+.options:hover{
+  background-color: #7f879b;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que el toolbar esté sobre otros elementos */
+}
+
+.vetpet{
+  cursor: pointer;
+}

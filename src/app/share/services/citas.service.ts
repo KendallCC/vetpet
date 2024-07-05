@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Encargadocita } from '../interfaces/cita';
+import { Encargadocita, listaCitas } from '../interfaces/cita';
 import { Cita } from '../interfaces/cita';
 
 @Injectable({

@@ -25,104 +25,76 @@
       </div>
     </section>
 
-    <section class="factura-section">
-      <h3>Detalle</h3>
-      <mat-table [dataSource]="detallesfactura" class="mat-elevation-z8">
+    <section>
+      <h3>Productos</h3>
+      <mat-table [dataSource]="productos" class="mat-elevation-z8">
         <!-- Column Definitions -->
-
-        <ng-container matColumnDef="producto">
-          <th mat-header-cell *matHeaderCellDef>Nombre del Producto</th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.producto) {
-
-            {{ element.producto.nombre }}
-
-            } @else {"No registro productos"}
-          </td>
-          <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef>Nombre del Servicio</th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.servicio) {
-
-            {{ element.servicio.nombre }}
-
-            } @else {"No registro servicios"}
-          </td>
-
-          <td mat-footer-cell *matFooterCellDef></td>
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{ element.producto.nombre }} </td>
         </ng-container>
         <ng-container matColumnDef="cantidad">
-          <th mat-header-cell *matHeaderCellDef>Cantidad producto</th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.producto) {
-
-            {{ element.cantidad }}
-
-            } @else {"No registro productos"}
-          </td>
-          <td mat-footer-cell *matFooterCellDef></td>
+          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+          <td mat-cell *matCellDef="let element"> {{ element.cantidad }} </td>
         </ng-container>
-        <ng-container matColumnDef="precioP">
-          <th mat-header-cell *matHeaderCellDef>Precio Producto</th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.producto) {
-            {{ element.producto.precio | currency : "CRC":undefined:'3.0'}}
-          } @else {"No registro productos"}
-          </td>
-          <td mat-footer-cell *matFooterCellDef></td>
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let element"> {{ element.producto.precio | currency:'CRC':undefined:'3.0' }} </td>
         </ng-container>
-        <ng-container matColumnDef="precioS">
-          <th mat-header-cell *matHeaderCellDef>Precio Servicio</th>
-          
-          <td mat-cell *matCellDef="let element">
-            
-            @if (element.servicio) {
-            {{ element.servicio.tarifa | currency : "CRC":undefined:'3.0'}}
-          } @else {"No registro servicios"}
-          </td>
-          <td mat-footer-cell *matFooterCellDef class="detalleFinal">
-            <div>Subtotal</div>
-            <div>IVA (13%)</div>
-            <div>Total</div>
-          </td>
+        <ng-container matColumnDef="subtotal">
+          <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+          <td mat-cell *matCellDef="let element"> {{ calcularSubtotalProducto(element) | currency:'CRC':undefined:'3.0' }} </td>
         </ng-container>
-        
-        <ng-container matColumnDef="total">
-          <th mat-header-cell *matHeaderCellDef>Total a pagar</th>
-          <td mat-cell *matCellDef="let element"></td>
-          <td mat-footer-cell *matFooterCellDef>
-            <div>{{ subtotal | currency : "CRC":undefined:'3.0' }}</div>
-            <div>{{ (subtotal * 0.13) | currency : "CRC":undefined:'3.0'}}</div>
-            <div>{{ (subtotal * 1.13) | currency : "CRC":undefined:'3.0' }}</div>
-          </td>
+        <ng-container matColumnDef="iva">
+          <th mat-header-cell *matHeaderCellDef> IVA </th>
+          <td mat-cell *matCellDef="let element"> {{ calcularIVA(calcularSubtotalProducto(element)) | currency:'CRC':undefined:'3.0' }} </td>
         </ng-container>
-     
-
+        <ng-container matColumnDef="totalConIVA">
+          <th mat-header-cell *matHeaderCellDef> Total </th>
+          <td mat-cell *matCellDef="let element"> {{ calcularTotalConIVA(calcularSubtotalProducto(element)) | currency:'CRC':undefined:'3.0' }} </td>
+        </ng-container>
         <!-- Row Definitions -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        <tr
-          mat-footer-row
-          *matFooterRowDef="[
-            'producto',
-            'nombre',
-            'cantidad',
-            'precioP',
-            'precioS',
-            'total',
-          
-            
-          ]"
-          class="example-second-footer-row"
-        ></tr>
+        <tr mat-header-row *matHeaderRowDef="['nombre', 'cantidad', 'precio', 'subtotal', 'iva', 'totalConIVA']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['nombre', 'cantidad', 'precio', 'subtotal', 'iva', 'totalConIVA'];"></tr>
+      </mat-table>
+    </section>
+    <section>
+      <h3>Servicios</h3>
+      <mat-table [dataSource]="servicios" class="mat-elevation-z8">
+        <!-- Column Definitions -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{ element.servicio.nombre }} </td>
+        </ng-container>
+        <ng-container matColumnDef="especialidad">
+          <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+          <td mat-cell *matCellDef="let element"> {{ element.servicio.Especialidad }} </td>
+        </ng-container>
+        <ng-container matColumnDef="tarifa">
+          <th mat-header-cell *matHeaderCellDef> Precio de servicio </th>
+          <td mat-cell *matCellDef="let element"> {{ element.servicio.tarifa | currency:'CRC':undefined:'3.0' }} </td>
+        </ng-container>
+        <ng-container matColumnDef="subtotal">
+          <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+          <td mat-cell *matCellDef="let element"> {{ calcularSubtotalServicio(element) | currency:'CRC':undefined:'3.0' }} </td>
+        </ng-container>
+        <ng-container matColumnDef="iva">
+          <th mat-header-cell *matHeaderCellDef> IVA </th>
+          <td mat-cell *matCellDef="let element"> {{ calcularIVA(calcularSubtotalServicio(element)) | currency:'CRC':undefined:'3.0' }} </td>
+        </ng-container>
+        <ng-container matColumnDef="totalConIVA">
+          <th mat-header-cell *matHeaderCellDef> Total </th>
+          <td mat-cell *matCellDef="let element"> {{ calcularTotalConIVA(calcularSubtotalServicio(element)) | currency:'CRC':undefined:'3.0' }} </td>
+        </ng-container>
+        <!-- Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="['nombre','especialidad', 'tarifa', 'subtotal', 'iva', 'totalConIVA']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['nombre','especialidad' ,'tarifa', 'subtotal', 'iva', 'totalConIVA'];"></tr>
       </mat-table>
     </section>
 
     <section class="factura-totales">
-      <h3>Totales</h3>
-      <p>Total de la Compra: {{ totalCompra| currency : "CRC":undefined:'3.0' }}</p>
+      <h3>Total a pagar</h3>
+      <p>{{ totalGeneral | currency:'CRC' :undefined:'3.0' }}</p>
     </section>
   </mat-card-content>
 </mat-card>

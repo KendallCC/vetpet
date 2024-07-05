@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { DetallefacturaService } from '../../share/services/detallefactura.service';
-import { DetalleFactura, DetallesFactura} from '../../share/interfaces/detalle-factura';
+import {
+  DetalleFactura,
+  DetallesFactura,
+} from '../../share/interfaces/detalle-factura';
 import { Sucursal } from '../../share/interfaces/sucursal';
 import { Cliente } from '../../share/interfaces/cliente';
 
@@ -12,76 +15,81 @@ import { Cliente } from '../../share/interfaces/cliente';
   styleUrl: './detalle-factura.component.css',
 })
 export class DetalleFacturaComponent implements OnInit {
-  displayedColumns: string[] = ['producto', 'nombre', 'cantidad', 'precioP', 'precioS', 'total'];
+  displayedColumns: string[] = [
+    'producto',
+    'nombre',
+    'cantidad',
+    'precioP',
+    'precioS',
+    'total',
+  ];
 
   Id: number;
   detallesfactura: DetallesFactura;
   Sucursal: Sucursal;
   Cliente: Cliente;
-  subtotal:number=0;
-
-
+  subtotal: number = 0;
+  productos: DetalleFactura[] = [];
+  servicios: DetalleFactura[] = [];
+  totalGeneral: number = 0;
+  ivaRate = 0.13;
   FechaFactura: Date;
   constructor(
     private route: ActivatedRoute,
     private service: DetallefacturaService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.Id = parseInt(params.get('id'));
+    this.consultarDetalle();
+  }
 
-      if (this.Id !== null) {
-        this.service.getDetallesFactura(this.Id).subscribe((data) => {
+  consultarDetalle() {
+    this.route.paramMap.subscribe((params) => {
+      const id = +params.get('id');
+      if (id) {
+        this.service.getDetallesFactura(id).subscribe((data) => {
           this.detallesfactura = data;
           this.FechaFactura = this.detallesfactura[0].factura.fecha_factura;
           this.Sucursal = this.detallesfactura[0].factura.cita.sucursal;
           this.Cliente = this.detallesfactura[0].factura.cita.cliente;
-          this.calculateSubtotal()
-          console.log(data);
-          
+
+          this.productos = data.filter((item) => item.producto != null);
+          this.servicios = data.filter((item) => item.servicio != null);
+
+          this.calcularTotalGeneral();
         });
       }
     });
   }
 
-
-  // Método para calcular el subtotal de un elemento DetalleFactura
-  calculateSubtotal() {
-    this.subtotal = 0; // Reiniciar subtotal
-    for (const detalle of this.detallesfactura) {
-      if (detalle.producto) {
-        this.subtotal += detalle.cantidad * detalle.producto.precio;
-      }
-      if (detalle.servicio) {
-        this.subtotal += detalle.servicio.tarifa;
-      }
-    }
+  calcularSubtotalProducto(producto: DetalleFactura): number {
+    return producto.cantidad * producto.producto.precio;
   }
 
-  get totalCompra(): string {
-    if (!this.detallesfactura) {
-      return '0.00'; // Manejo de caso cuando detallesfactura aún no está definido
-    }
-  
-    let suma = 0;
-    for (const detalle of this.detallesfactura) {
-      // Sumar el precio del producto si existe
-      if (detalle.producto) {
-        suma += detalle.cantidad * detalle.producto.precio;
-      }
-      // Sumar la tarifa del servicio solo si el servicio existe
-      if (detalle.servicio && detalle.servicio.tarifa) {
-        suma += detalle.servicio.tarifa;
-      }
-    }
-  
-    // Aplicar 13% de IVA
-    const totalConIVA = suma * 1.13;
-  
-    // Formatear el resultado a dos decimales
-    return totalConIVA.toFixed(2);
+  calcularSubtotalServicio(servicio: DetalleFactura): number {
+    return servicio.servicio.tarifa;
+  }
+
+  calcularIVA(monto: number): number {
+    return monto * this.ivaRate;
+  }
+
+  calcularTotalConIVA(monto: number): number {
+    return monto + this.calcularIVA(monto);
+  }
+
+  calcularTotalGeneral() {
+    this.totalGeneral = 0;
+    this.productos.forEach(producto => {
+      const subtotal = this.calcularSubtotalProducto(producto);
+      this.totalGeneral += subtotal + this.calcularIVA(subtotal);
+    });
+    this.servicios.forEach(servicio => {
+      const subtotal = this.calcularSubtotalServicio(servicio);
+      this.totalGeneral += subtotal + this.calcularIVA(subtotal);
+    });
+
+
   }
 }
-

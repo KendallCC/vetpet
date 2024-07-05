@@ -9,7 +9,7 @@ import { GlobalService } from './share/services/global.service';
 export class AppComponent {
   title = 'vetpet';
 
-  idEncargado: number = 2;
+  idEncargado: number = 14;
 
  constructor(private globalService:GlobalService){
   this.actualizarVariableGlobal(this.idEncargado)

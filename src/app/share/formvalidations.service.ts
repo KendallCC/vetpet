@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormvalidationsService {
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   isFieldInvalid(form: FormGroup, field: string): boolean {
     const control = form.get(field);
@@ -43,4 +46,14 @@ export class FormvalidationsService {
     }
     return '';
   }
+
+
+
+  mensajeExito(mensaje: string, operacion: string) {
+
+    this.toastr.success(mensaje, operacion, { positionClass: 'toast-top-center', progressBar: true, disableTimeOut: false })
+
+  }
+
+
 }

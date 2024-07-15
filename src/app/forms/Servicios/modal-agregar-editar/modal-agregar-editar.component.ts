@@ -93,7 +93,7 @@ export class ModalAgregarEditarComponent implements OnInit {
       }
 
       this.service.postService(servicio).subscribe(() => {
-
+        this.validationService.mensajeExito("se han agregado con exito los datos","Agregacion")
       })
 
     } else {
@@ -112,7 +112,7 @@ export class ModalAgregarEditarComponent implements OnInit {
       }
 
       this.service.updateService(this.id, servicio).subscribe(() => {
-        
+        this.validationService.mensajeExito("se han actualizado con exito los datos","Actualizacion")
       })
     }
     this.dialogRef.close(true);

@@ -31,4 +31,7 @@ export class ServicesService {
     return this.http.put<void>(`${this.APIURL}/servicio/${Id}`,servicio)
   }
 
+  deleteService(id:number):Observable<void>{
+    return this.http.delete<void>(`${this.APIURL}/servicio/${id}`)
+  }
 }

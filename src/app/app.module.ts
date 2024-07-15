@@ -20,12 +20,14 @@ import { CitaModule } from './cita/cita.module';
 import { FormsModule } from './forms/forms.module';
 import { ServicesModule } from './services/services.module';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { ToastrModule } from 'ngx-toastr';
 registerLocaleData(localEsCR, 'es');
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ToastrModule.forRoot(),
     //!Modulos propios creados
     MatCardModule,
 

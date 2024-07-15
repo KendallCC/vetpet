@@ -15,15 +15,8 @@ import { Cliente } from '../../share/interfaces/cliente';
   styleUrl: './detalle-factura.component.css',
 })
 export class DetalleFacturaComponent implements OnInit {
-  displayedColumns: string[] = [
-    'producto',
-    'nombre',
-    'cantidad',
-    'precioP',
-    'precioS',
-    'total',
-  ];
-
+  displayedColumnsProduct: string[] = ['nombre', 'cantidad', 'precio', 'subtotal', 'iva', 'totalConIVA'];
+  displayedColumnsService: string[] = ['nombre','especialidad', 'tarifa', 'subtotal', 'iva', 'totalConIVA'];
   Id: number;
   detallesfactura: DetallesFactura;
   Sucursal: Sucursal;

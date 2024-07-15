@@ -1,7 +1,7 @@
 export type listaServicios=Servicio[]
 
 export interface Servicio {
-    id: number
+    id?: number
     nombre: string
     descripcion: string
     tarifa: number

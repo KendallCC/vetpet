@@ -1,0 +1,93 @@
+.service-detail-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 5rem;
+}
+
+.service-name {
+    color: #333;
+    font-size: 2rem;
+}
+
+.service-brand, .service-category, .service-description, .service-price, .service-type {
+    color: #555;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.service-description {
+    margin-bottom: 20px;
+}
+
+.service-price {
+    color: #008000;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.service-type {
+    font-style: italic;
+}
+
+
+.cta {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .cta span {
+    padding-bottom: 7px;
+    letter-spacing: 4px;
+    font-size: 14px;
+    padding-right: 15px;
+    text-transform: uppercase;
+  }
+  
+  .cta svg {
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+  }
+  
+  .cta:hover svg {
+    transform: translateX(0);
+  }
+  
+  .cta:active svg {
+    transform: scale(0.9);
+  }
+  
+  .hover-underline-animation {
+    position: relative;
+    color: black;
+    padding-bottom: 20px;
+  }
+  
+  .hover-underline-animation:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .cta:hover .hover-underline-animation:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  .conteneedorcompra{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }

@@ -33,4 +33,10 @@ export class HeaderComponent implements OnInit{
   }
   
 
+
+  irMantenimientoServices(){
+    this.router.navigate(['tablaServicios'])
+  }
+
+
 }

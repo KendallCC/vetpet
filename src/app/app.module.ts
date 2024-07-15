@@ -1,4 +1,4 @@
-import { LOCALE_ID,NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,21 +14,17 @@ import { HomeModule } from './home/home.module';
 import { FacturaModule } from './factura/factura.module';
 //!configuracion para horas en español
 
-
-import localEsCR from '@angular/common/locales/es-CR'
+import localEsCR from '@angular/common/locales/es-CR';
 import { registerLocaleData } from '@angular/common';
 import { CitaModule } from './cita/cita.module';
-registerLocaleData(localEsCR,'es')
-
-
-
+import { FormsModule } from './forms/forms.module';
+import { ServicesModule } from './services/services.module';
+import { provideNativeDateAdapter } from '@angular/material/core';
+registerLocaleData(localEsCR, 'es');
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
-
     BrowserModule,
     //!Modulos propios creados
     MatCardModule,
@@ -36,22 +32,23 @@ registerLocaleData(localEsCR,'es')
     FacturaModule,
     CitaModule,
     CoreModule,
+
+    ServicesModule, 
+    FormsModule,
     ShareModule,
     ProductModule,
     HomeModule,
-   
 
-    
     //!Rutas de modulos
     AppRoutingModule,
-              
-         
-    
-    
+   
   ],
   providers: [
-    provideAnimationsAsync(),provideHttpClient(),{provide:LOCALE_ID,useValue: 'es-CR'}
+    provideAnimationsAsync(),
+    provideHttpClient(),
+    { provide: LOCALE_ID, useValue: 'es-CR' },
+    provideNativeDateAdapter()
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

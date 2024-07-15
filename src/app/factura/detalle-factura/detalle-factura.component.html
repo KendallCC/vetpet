@@ -55,8 +55,8 @@
             <td mat-cell *matCellDef="let element"> {{ calcularTotalConIVA(calcularSubtotalProducto(element)) | currency:'CRC':undefined:'3.0' }} </td>
           </ng-container>
           <!-- Row Definitions -->
-          <tr mat-header-row *matHeaderRowDef="['nombre', 'cantidad', 'precio', 'subtotal', 'iva', 'totalConIVA']"></tr>
-          <tr mat-row *matRowDef="let row; columns: ['nombre', 'cantidad', 'precio', 'subtotal', 'iva', 'totalConIVA'];"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsProduct"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsProduct;"></tr>
         </mat-table>
       </section>
     }
@@ -91,8 +91,8 @@
             <td mat-cell *matCellDef="let element"> {{ calcularTotalConIVA(calcularSubtotalServicio(element)) | currency:'CRC':undefined:'3.0' }} </td>
           </ng-container>
           <!-- Row Definitions -->
-          <tr mat-header-row *matHeaderRowDef="['nombre','especialidad', 'tarifa', 'subtotal', 'iva', 'totalConIVA']"></tr>
-          <tr mat-row *matRowDef="let row; columns: ['nombre','especialidad' ,'tarifa', 'subtotal', 'iva', 'totalConIVA'];"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsService"></tr>
+          <tr mat-row *matRowDef="let row; columns:displayedColumnsService;"></tr>
         </mat-table>
       </section>
     }

@@ -3,7 +3,7 @@ import { Categoria } from "./categoria";
 export type ListaProductos=Producto[];
 
 export interface Producto {
-    id: number
+    id?: number
     nombre: string
     descripcion: string
     categoria: Categoria

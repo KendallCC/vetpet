@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { FormsRoutingModule } from './forms-routing.module';
 import { TablaProductosComponent } from './productos/tabla-productos/tabla-productos.component';
-import { AgregarProductosComponent } from './productos/agregar-productos/agregar-productos.component';
-
 
 
 //!importaciones angular
@@ -23,16 +21,17 @@ import { ModalAgregarEditarComponent } from './Servicios/modal-agregar-editar/mo
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatSelectModule} from '@angular/material/select';
 //!formularios reactivos
 import { ReactiveFormsModule } from '@angular/forms';
+import { ModalAgregarEditarProdComponent } from './productos/modal-agregar-editar-prod/modal-agregar-editar-prod.component';
 
 @NgModule({
   declarations: [
     TablaProductosComponent,
-    AgregarProductosComponent,
     TablaServiciosComponent,
     ModalAgregarEditarComponent,
+    ModalAgregarEditarProdComponent,
 
   ],
   imports: [
@@ -41,6 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,

@@ -24,6 +24,10 @@ export class HeaderComponent implements OnInit{
     this.router.navigate(['productos'])
   }
   
+  irServicios(){
+    this.router.navigate(['listaServicios'])
+  }
+
   irFactura(){
     this.router.navigate(['factura'])
   }
@@ -38,5 +42,15 @@ export class HeaderComponent implements OnInit{
     this.router.navigate(['tablaServicios'])
   }
 
+  irMantenimientoProductos(){
+    this.router.navigate(['tablaProductos'])
+  }
 
+  irMantenimientoSucursales(){
+    this.router.navigate(['tablaSucursales'])
+  }
+
+  irMantenimientoHorarios(){
+    this.router.navigate(['tablabBloqueoHorario'])
+  }
 }

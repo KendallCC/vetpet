@@ -21,6 +21,9 @@ import { FormsModule } from './forms/forms.module';
 import { ServicesModule } from './services/services.module';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ToastrModule } from 'ngx-toastr';
+import { SucursalModule } from './sucursal/sucursal.module';
+import { HorariobloqueoModule } from './horariobloqueo/horariobloqueo.module';
+
 registerLocaleData(localEsCR, 'es');
 
 @NgModule({
@@ -29,20 +32,25 @@ registerLocaleData(localEsCR, 'es');
     BrowserModule,
     ToastrModule.forRoot(),
     //!Modulos propios creados
+    HorariobloqueoModule,
     MatCardModule,
-
+    FormsModule,
     FacturaModule,
     CitaModule,
     CoreModule,
-
+    SucursalModule,
+    
+    
     ServicesModule, 
-    FormsModule,
+    
     ShareModule,
     ProductModule,
     HomeModule,
 
     //!Rutas de modulos
     AppRoutingModule,
+   
+     
    
   ],
   providers: [

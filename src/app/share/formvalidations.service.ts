@@ -39,6 +39,8 @@ export class FormvalidationsService {
             return `No puede ser más de ${max}`;
           case 'pattern':
             return 'Solo se permiten números';
+            case 'timeRangeInvalid':
+              return 'La hora de inicio debe ser anterior a la hora de fin.';
           default:
             return '';
         }
@@ -54,6 +56,14 @@ export class FormvalidationsService {
     this.toastr.success(mensaje, operacion, { positionClass: 'toast-top-center', progressBar: true, disableTimeOut: false })
 
   }
+
+  mensajeError(mensaje: string, operacion: string) {
+
+    this.toastr.error(mensaje, operacion, { positionClass: 'toast-top-center', progressBar: true, disableTimeOut: false })
+
+  }
+
+  
 
 
 }

@@ -22,9 +22,17 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 //!formularios reactivos
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalAgregarEditarProdComponent } from './productos/modal-agregar-editar-prod/modal-agregar-editar-prod.component';
+
+import { TablaSucursalesComponent } from './Sucursales/tabla-sucursales/tabla-sucursales.component';
+import { ModalAgregarEditarSucursalComponent } from './Sucursales/modal-agregar-editar-sucursal/modal-agregar-editar-sucursal.component';
+import { TablaBloqueoHorarioComponent } from './horarioBloqueo/tabla-bloqueo-horario/tabla-bloqueo-horario.component';
+import { ModalCrearHorarioComponent } from './horarioBloqueo/modal-crear-horario/modal-crear-horario.component';
+import { ModalCrearBloqueoComponent } from './horarioBloqueo/modal-crear-bloqueo/modal-crear-bloqueo.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -32,6 +40,13 @@ import { ModalAgregarEditarProdComponent } from './productos/modal-agregar-edita
     TablaServiciosComponent,
     ModalAgregarEditarComponent,
     ModalAgregarEditarProdComponent,
+    TablaSucursalesComponent,
+    ModalAgregarEditarSucursalComponent,
+    TablaBloqueoHorarioComponent,
+    ModalCrearHorarioComponent,
+    ModalCrearBloqueoComponent,
+   
+   
 
   ],
   imports: [
@@ -48,7 +63,9 @@ import { ModalAgregarEditarProdComponent } from './productos/modal-agregar-edita
     MatDialogModule,
     MatButtonModule,
     MatDatepickerModule,
-    ReactiveFormsModule
+    MatIconModule,
+    ReactiveFormsModule,
+    MatGridListModule
   ]
 })
 export class FormsModule { }

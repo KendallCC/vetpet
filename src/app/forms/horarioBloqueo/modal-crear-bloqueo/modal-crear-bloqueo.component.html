@@ -1,0 +1,77 @@
+
+
+<h2 mat-dialog-title>Crear Bloqueo</h2>
+<mat-dialog-content>
+  <form [formGroup]="bloqueoForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('fecha')">
+      <mat-label>Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" formControlName="fecha">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="isFieldInvalid('fecha')">
+        {{ getErrorMessage('fecha') }}
+    </mat-error>
+    </mat-form-field>
+    
+    
+
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('dia_semana')">
+      <mat-label>Día de la Semana</mat-label>
+      <mat-select formControlName="dia_semana">
+        <mat-option *ngFor="let dia of diasSemana" [value]="dia">{{ dia }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldInvalid('dia_semana')">
+        {{ getErrorMessage('dia_semana') }}
+    </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('hora_inicio')">
+      <mat-label>Hora de Inicio</mat-label>
+      <input matInput type="time" formControlName="hora_inicio">
+      <mat-error *ngIf="isFieldInvalid('hora_inicio')">
+        {{ getErrorMessage('hora_inicio') }}
+    </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('hora_fin')">
+      <mat-label>Hora de Fin</mat-label>
+      <input matInput type="time" formControlName="hora_fin">
+      <mat-error *ngIf="isFieldInvalid('hora_fin')">
+        {{ getErrorMessage('hora_fin') }}
+    </mat-error>
+    </mat-form-field>
+
+    <mat-error *ngIf="bloqueoForm.errors?.['timeRangeInvalid']">
+      La hora de inicio debe ser anterior a la hora de fin.
+    </mat-error>
+
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_sucursal')">
+      <mat-label>Sucursal</mat-label>
+      <mat-select formControlName="id_sucursal">
+        <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.id">{{ sucursal.nombre }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldInvalid('id_sucursal')">
+        {{ getErrorMessage('id_sucursal') }}
+    </mat-error>
+
+    </mat-form-field>
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('repeticion')">
+      <mat-label>Repetición</mat-label>
+      <mat-select formControlName="repeticion">
+        <mat-option *ngFor="let repeticion of tiposRepeticion" [value]="repeticion">{{ repeticion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldInvalid('repeticion')">
+        {{ getErrorMessage('repeticion') }}
+    </mat-error>
+    </mat-form-field>
+
+
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close type="button">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!bloqueoForm.valid">Crear Horario</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

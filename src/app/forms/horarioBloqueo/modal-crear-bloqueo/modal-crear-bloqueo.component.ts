@@ -50,19 +50,36 @@ export class ModalCrearBloqueoComponent implements OnInit {
   }
 
 
+  // dateFilter = (d: Date | null): boolean => {
+  //   const today = new Date();
+  //   const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+  //   return d >= tomorrow;
+  // }
+
+
   dateFilter = (d: Date | null): boolean => {
     const today = new Date();
-    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-    return d >= tomorrow;
+    today.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
+    if (d) {
+      d.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
+      return d >= today;
+    }
+    return false;
   }
+
+
 
   onSubmit() {
     if (this.bloqueoForm.valid) {
       const formValues = this.bloqueoForm.getRawValue(); // Usamos getRawValue para incluir el campo deshabilitado
 
       const fecha = new Date(formValues.fecha);
-      if (fecha < new Date()) {
-        this.formvalidadation.mensajeError("La fecha debe ser actual o futura", 'Agregar')
+      const fechaActual = new Date();
+      fechaActual.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
+      fecha.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
+
+      if (fecha < fechaActual) {
+        this.formvalidadation.mensajeError("La fecha debe ser actual o futura", 'Agregar');
         return;
       }
 

@@ -6,8 +6,8 @@
       <mat-card-content>
         <p><strong>Sucursal:</strong> {{ horario.sucursal.nombre }}</p>
         <p><strong>Fecha:</strong> {{ horario.fecha | date:'fullDate' }}</p>
-        <p><strong>Hora de Inicio:</strong> {{ horario.hora_inicio | date:'shortTime' }}</p>
-        <p><strong>Hora de Fin:</strong> {{ horario.hora_fin | date:'shortTime' }}</p>
+        <p><strong>Hora de Inicio:</strong> {{ horario.hora_inicio | date:'h:mm aaaa' }}</p>
+        <p><strong>Hora de Fin:</strong> {{ horario.hora_fin | date:'h:mm aaaa' }}</p>
         <p><strong>Bloqueo:</strong> {{ horario.bloqueo ? 'Sí' : 'No' }}</p>
         <p><strong>Repetición:</strong> {{ horario.repeticion }}</p>
       </mat-card-content>

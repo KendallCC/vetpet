@@ -40,7 +40,7 @@
             <div class="column">
                 <mat-form-field appearance="fill" [class.error]="isFieldInvalid('horas')">
                     <mat-label>Horas</mat-label>
-                    <input formControlName="horas" matInput type="number" min="0" (change)="onHourChange($event)">
+                    <input formControlName="horas" matInput type="number" min="0" max="12" (change)="onHourChange($event)">
                     <mat-error *ngIf="isFieldInvalid('horas')">
                         {{ getErrorMessage('horas') }}
                     </mat-error>

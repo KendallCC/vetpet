@@ -1,0 +1,21 @@
+<div class="about-section animate__animated animate__fadeIn">
+    <h1>Conoce más sobre Todos nuestros productos para tu mascota</h1>
+    <p>Somos líderes en cuidado animal, ofreciendo productos y servicios de alta calidad desde 2005.</p>
+  </div>
+
+<div class="grid-container">
+    <div  *ngFor="let servicio of servicios" class="animate__animated animate__fadeInUp">
+       
+
+       <div class="card" style="padding-bottom: 5rem;">
+            <div class="card-details">
+              <p class="text-title"> {{ servicio.nombre }}</p>
+              <p class="text-body"><strong>Descripcion:</strong> {{ servicio.descripcion }}</p>
+              <p class="text-body"><strong>Precio:</strong> {{ servicio.tarifa | currency : "CRC":undefined:'3.0'}}</p>
+            </div>
+            <button class="card-button" (click)="Detalle(servicio.id)">Ver mas</button>
+        </div> 
+
+
+    </div>
+</div>

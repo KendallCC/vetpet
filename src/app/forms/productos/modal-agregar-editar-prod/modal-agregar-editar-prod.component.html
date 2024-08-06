@@ -1,0 +1,91 @@
+<h2 mat-dialog-title>{{operacion}} Producto</h2>
+<form [formGroup]="form" (ngSubmit)="addEdit()">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('nombre')">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="nombre" matInput autocomplete="off" placeholder="Ingrese nombre">
+                    <mat-error *ngIf="isFieldInvalid('nombre')">
+                        {{ getErrorMessage('nombre') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+
+
+
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('descripcion')">
+                    <mat-label>Descripcion</mat-label>
+                    <input formControlName="descripcion" matInput autocomplete="off" placeholder="Ingrese Descripcion">
+                    <mat-error *ngIf="isFieldInvalid('descripcion')">
+                        {{ getErrorMessage('descripcion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+@if (categorias) {
+    <div class="row">
+        <div class="column">
+            <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_categoria')">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="id_categoria">
+                    @for (item of categorias; track item.id) {
+                    <mat-option [value]="item.id">{{item.nombre}}</mat-option>
+                    }
+                </mat-select>
+                <mat-error *ngIf="isFieldInvalid('id_categoria')">
+                    {{ getErrorMessage('id_categoria') }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+}
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('precio')">
+                    <mat-label>Precio</mat-label>
+                    <input type="number" formControlName="precio" matInput class="example-right-align"
+                        placeholder="0" />
+                    <span matTextPrefix>₡&nbsp;</span>
+                    <mat-error *ngIf="isFieldInvalid('precio')">
+                        {{ getErrorMessage('precio') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('Marca')">
+                    <mat-label>Marca</mat-label>
+                    <input formControlName="Marca" matInput autocomplete="off" placeholder="Ingrese la Marca">
+                    <mat-error *ngIf="isFieldInvalid('Marca')">
+                        {{ getErrorMessage('Marca') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('Tipo_mascota')">
+                    <mat-label>Tipo mascota</mat-label>
+                    <input formControlName="Tipo_mascota" matInput autocomplete="off"
+                        placeholder="Ingrese un Tipo de mascota">
+                    <mat-error *ngIf="isFieldInvalid('Tipo_mascota')">
+                        {{ getErrorMessage('Tipo_mascota') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+        <button type="submit" [disabled]="form.invalid" mat-button>Aceptar</button>
+    </mat-dialog-actions>
+</form>

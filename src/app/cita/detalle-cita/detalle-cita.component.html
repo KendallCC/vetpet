@@ -1,0 +1,57 @@
+@if (cita) {
+  <mat-card>
+    <mat-card-header class="centrado">
+      <mat-card-title> Detalle de la Cita: {{ cita.fecha_cita | date: 'fullDate' }}</mat-card-title>
+      <mat-card-subtitle class="{{cita.estado}}">{{ cita.estado }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+   
+      <mat-tab-group>
+        <mat-tab label="Información General">
+          <mat-list>
+            <mat-list-item> <Strong>Dirección: </Strong>{{ cliente.direccion }}</mat-list-item>
+            <mat-list-item><Strong>Condición: </Strong>{{ cita.condicion }}</mat-list-item>
+            <mat-list-item><Strong>Motivo: </Strong>{{ cita.motivo }}</mat-list-item>
+            <mat-list-item><Strong>Observaciones: </Strong>{{ cita.observaciones }}</mat-list-item>
+            <mat-list-item><Strong>Vacunas: </Strong>{{ cita.vacunas }}</mat-list-item>
+            <mat-list-item><Strong>Fecha y Hora: </Strong>{{ cita.hora_cita | date: 'MMMM d, y, h:mm aaaa' }}</mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="Cliente">
+          <mat-list>
+            <mat-list-item> <Strong>Nombre: </Strong>  {{ cliente.nombre }}</mat-list-item>
+            <mat-list-item> <Strong>Teléfono: </Strong> {{ cliente.telefono }}</mat-list-item>
+            <mat-list-item> <Strong>Correo: </Strong>{{ cliente.correo_electronico }}</mat-list-item>
+            <mat-list-item> <Strong>Dirección: </Strong>{{ cliente.direccion }}</mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="Mascota">
+          <mat-list>
+            <mat-list-item> <Strong>Nombre: </Strong> {{ mascota.nombre }}</mat-list-item>
+            <mat-list-item> <Strong>Especie: </Strong> {{ mascota.especie }}</mat-list-item>
+            <mat-list-item> <Strong>Raza: </Strong> {{ mascota.raza }}</mat-list-item>
+            <mat-list-item> <Strong>Sexo:  </Strong>{{ mascota.sexo }}</mat-list-item>
+            <mat-list-item> <Strong>Fecha de Nacimiento: </Strong>{{ mascota.fecha_nacimiento | date:'fullDate' }}</mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="Servicio">
+          <mat-list>
+            <mat-list-item> <Strong>Nombre: </Strong>{{ servicio.nombre }}</mat-list-item>
+            <mat-list-item> <Strong>Descripción: </Strong>{{ servicio.descripcion }}</mat-list-item>
+            <mat-list-item> <Strong>Tarifa: </Strong>{{ servicio.tarifa | currency : "CRC":undefined:'3.0' }}</mat-list-item>
+            <mat-list-item> <Strong>Duración: </Strong>{{ servicio.tiempo_servicio | date: 'mm' }} minutos</mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="Sucursal">
+          <mat-list>
+            <mat-list-item> <Strong>Nombre: </Strong>{{ sucursal.nombre }}</mat-list-item>
+            <mat-list-item> <Strong>Descripción: </Strong>{{ sucursal.descripcion }}</mat-list-item>
+            <mat-list-item> <Strong>Teléfono: </Strong>{{ sucursal.telefono }}</mat-list-item>
+            <mat-list-item> <Strong>Dirección: </Strong>{{ sucursal.direccion }}</mat-list-item>
+            <mat-list-item> <Strong>Correo electrónico: </Strong>{{sucursal.correo_electronico }}</mat-list-item>
+          </mat-list>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+}

@@ -1,0 +1,87 @@
+<h2 mat-dialog-title>{{operacion}} Servicio</h2>
+<form [formGroup]="form" (ngSubmit)="addEdit()">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('nombre')">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="nombre" matInput autocomplete="off" placeholder="Ingrese nombre">
+                    <mat-error *ngIf="isFieldInvalid('nombre')">
+                        {{ getErrorMessage('nombre') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('descripcion')">
+                    <mat-label>Descripcion</mat-label>
+                    <input formControlName="descripcion" matInput autocomplete="off" placeholder="Ingrese Descripcion">
+                    <mat-error *ngIf="isFieldInvalid('descripcion')">
+                        {{ getErrorMessage('descripcion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('tarifa')">
+                    <mat-label>Tarifa</mat-label>
+                    <input type="number" formControlName="tarifa" matInput class="example-right-align" placeholder="0" />
+                    <span matTextPrefix>₡&nbsp;</span>
+                    <mat-error *ngIf="isFieldInvalid('tarifa')">
+                        {{ getErrorMessage('tarifa') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('horas')">
+                    <mat-label>Horas</mat-label>
+                    <input formControlName="horas" matInput type="number" min="0" max="12" (change)="onHourChange($event)">
+                    <mat-error *ngIf="isFieldInvalid('horas')">
+                        {{ getErrorMessage('horas') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('minutos')">
+                    <mat-label>Minutos</mat-label>
+                    <input formControlName="minutos" matInput type="number" min="0" max="59"
+                        (change)="onMinuteChange($event)">
+                    <mat-error *ngIf="isFieldInvalid('minutos')">
+                        {{ getErrorMessage('minutos') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('mascota')">
+                    <mat-label>Mascota</mat-label>
+                    <input formControlName="mascota" matInput autocomplete="off" placeholder="Ingrese la mascota">
+                    <mat-error *ngIf="isFieldInvalid('mascota')">
+                        {{ getErrorMessage('mascota') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('especialidad')">
+                    <mat-label>Especialidad</mat-label>
+                    <input formControlName="especialidad" matInput autocomplete="off"
+                        placeholder="Ingrese una especialidad">
+                    <mat-error *ngIf="isFieldInvalid('especialidad')">
+                        {{ getErrorMessage('especialidad') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+        <button type="submit" [disabled]="form.invalid" mat-button>Aceptar</button>
+    </mat-dialog-actions>
+</form>

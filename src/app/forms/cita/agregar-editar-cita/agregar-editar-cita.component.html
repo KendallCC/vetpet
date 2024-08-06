@@ -1,0 +1,161 @@
+<h2 mat-dialog-title>Crear Cita</h2>
+<mat-dialog-content>
+    <form [formGroup]="citaForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('fecha')">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" formControlName="fecha">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="isFieldInvalid('fecha')">
+                        {{ getErrorMessage('fecha') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_Cliente')">
+                    <mat-label>Clientes</mat-label>
+                    <mat-select formControlName="id_Cliente">
+                        <mat-option *ngFor="let cliente of listaClientes" [value]="cliente.id">{{ cliente.nombre
+                            }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isFieldInvalid('id_Cliente')">
+                        {{ getErrorMessage('id_Cliente') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('email')">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput autocomplete="off"
+                        placeholder="Seleccione un usuario primero" >
+                    <mat-error *ngIf="isFieldInvalid('email')">
+                        {{ getErrorMessage('email') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('sucursal')">
+                    <mat-label>Sucursal</mat-label>
+                    <input formControlName="sucursal" matInput autocomplete="off"
+                        placeholder="Seleccione un usuario primero" >
+                    <mat-error *ngIf="isFieldInvalid('sucursal')">
+                        {{ getErrorMessage('sucursal') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_Servicio')">
+                    <mat-label>Servicios</mat-label>
+                    <mat-select formControlName="id_Servicio">
+                        <mat-option *ngFor="let servicio of listaServicios" [value]="servicio.id">{{ servicio.nombre
+                            }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isFieldInvalid('id_Servicio')">
+                        {{ getErrorMessage('id_Servicio') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_mascota')">
+                    <mat-label>Mascota</mat-label>
+                    <mat-select formControlName="id_mascota">
+                        <mat-option *ngFor="let mascota of ListaMascotas" [value]="mascota.id">{{ mascota.nombre }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isFieldInvalid('id_mascota')">
+                        {{ getErrorMessage('id_mascota') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Duración del Servicio</mat-label>
+                    <input matInput formControlName="duracion" >
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('hora_inicio')">
+                    <mat-label>Hora de Inicio</mat-label>
+                    <input matInput type="time" formControlName="hora_inicio">
+                    <mat-error *ngIf="isFieldInvalid('hora_inicio')">
+                        {{ getErrorMessage('hora_inicio') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('hora_fin')">
+                    <mat-label>Hora de Fin</mat-label>
+                    <input matInput type="time" formControlName="hora_fin">
+                    <mat-error *ngIf="isFieldInvalid('hora_fin')">
+                        {{ getErrorMessage('hora_fin') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-error *ngIf="citaForm.errors?.['timeRangeInvalid']">
+            La hora de inicio debe ser anterior a la hora de fin.
+        </mat-error>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('observaciones')">
+                    <mat-label>Observaciones</mat-label>
+                    <input formControlName="observaciones" matInput autocomplete="off"
+                        placeholder="Digite las Observaciones">
+                    <mat-error *ngIf="isFieldInvalid('observaciones')">
+                        {{ getErrorMessage('observaciones') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('motivo')">
+                    <mat-label>Motivo</mat-label>
+                    <input formControlName="motivo" matInput autocomplete="off"
+                        placeholder="Digite el motivo de la cita">
+                    <mat-error *ngIf="isFieldInvalid('motivo')">
+                        {{ getErrorMessage('motivo') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('condicion')">
+                    <mat-label>Condicion</mat-label>
+                    <input formControlName="condicion" matInput autocomplete="off" placeholder="Digite la condicion">
+                    <mat-error *ngIf="isFieldInvalid('condicion')">
+                        {{ getErrorMessage('condicion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('vacunas')">
+                    <mat-label>Vacunas</mat-label>
+                    <input formControlName="vacunas" matInput autocomplete="off"
+                        placeholder="Digite las vacunas realizadas">
+                    <mat-error *ngIf="isFieldInvalid('vacunas')">
+                        {{ getErrorMessage('vacunas') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-dialog-actions>
+            <button mat-button mat-dialog-close type="button">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!citaForm.valid">Crear
+                Horario</button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

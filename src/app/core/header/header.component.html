@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <img src="../../../assets/Logo.png" alt="Logo" style="height: 50px;">
+  <span class="toolbar-title vetpet" (click)="irinicio()">VetPet</span>
+  <span class="example-spacer"></span>
+  <span mat-button  class="options" (click)="irServicios()">Servicios</span>
+
+  <span class="example-spacer"></span>
+  <span mat-button class="options" (click)="irProducto()">Productos</span>
+
+  <span class="example-spacer"></span>
+  <span mat-button  class="options" (click)="irAcerca()">Acerca de Nosotros</span>
+
+  <span class="example-spacer"></span>
+  <span mat-button [matMenuTriggerFor]="menu2" class="options" >Encargado</span>
+  <mat-menu #menu2="matMenu">
+    <button mat-menu-item (click)="irFactura()">Facturacion</button>
+    <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
+    <button mat-menu-item (click)="irMantenimientoServices()">Mantenimiento servicios</button>
+    <button mat-menu-item (click)="irMantenimientoProductos()">Mantenimiento Productos</button>
+    <button mat-menu-item (click)="irMantenimientoSucursales()">Mantenimiento Sucursales</button>
+    <button mat-menu-item (click)="irMantenimientoHorarios()">Mantenimiento Horarios y bloqueos</button>
+  </mat-menu>
+</mat-toolbar>

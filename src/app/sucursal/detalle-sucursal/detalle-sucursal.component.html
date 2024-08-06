@@ -1,0 +1,33 @@
+<div class="sucursal-container">
+  <mat-card *ngIf="sucursal" class="sucursal-card">
+    <mat-card-header>
+      <div mat-card-avatar class="sucursal-avatar"></div>
+      <mat-card-title>{{ sucursal.nombre }}</mat-card-title>
+      <mat-card-subtitle>{{ sucursal.direccion }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="sucursal-detail">
+        <p><strong>Descripción:</strong> {{ sucursal.descripcion }}</p>
+        <mat-divider></mat-divider>
+        <p><strong>Teléfono:</strong> {{ sucursal.telefono }}</p>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Correo Electrónico:</strong> {{ sucursal.correo_electronico }}
+        </p>
+        <mat-divider></mat-divider>
+        <h3>Encargados</h3>
+        <mat-icon mat-list-icon>person</mat-icon>
+        <mat-list>
+          @for (usuario of usuarios; track $index) {
+          <mat-list-item>
+            <div>
+              <h4 mat-line>{{ usuario.nombre }}</h4>
+              <p mat-line>{{ usuario.email }}</p>
+            </div>
+          </mat-list-item>
+          }
+        </mat-list>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

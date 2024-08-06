@@ -1,0 +1,86 @@
+<h2 mat-dialog-title>{{operacion}} Sucursal</h2>
+<form [formGroup]="form" (ngSubmit)="addEdit()">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('nombre')">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="nombre" matInput autocomplete="off" placeholder="Ingrese nombre">
+                    <mat-error *ngIf="isFieldInvalid('nombre')">
+                        {{ getErrorMessage('nombre') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('descripcion')">
+                    <mat-label>Descripción</mat-label>
+                    <input formControlName="descripcion" matInput autocomplete="off" placeholder="Ingrese descripción">
+                    <mat-error *ngIf="isFieldInvalid('descripcion')">
+                        {{ getErrorMessage('descripcion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('telefono')">
+                    <mat-label>Teléfono</mat-label>
+                    <input formControlName="telefono" matInput class="example-right-align"/>
+                    <mat-error *ngIf="isFieldInvalid('telefono')">
+                        {{ getErrorMessage('telefono') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('correo_electronico')">
+                    <mat-label>Correo</mat-label>
+                    <input formControlName="correo_electronico" matInput class="example-right-align"/>
+                    <mat-error *ngIf="isFieldInvalid('correo_electronico')">
+                        {{ getErrorMessage('correo_electronico') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('direccion')">
+                    <mat-label>Dirección</mat-label>
+                    <input formControlName="direccion" matInput class="example-right-align"/>
+                    <mat-error *ngIf="isFieldInvalid('direccion')">
+                        {{ getErrorMessage('direccion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('usuarios')">
+                    <mat-label>Encargados</mat-label>
+                    <mat-select formControlName="usuarios" multiple>
+                        @for (item of listaUsuarios; track item.id) {
+                        <mat-option [value]="item.id">{{ item.nombre }}</mat-option>
+                    }
+                    </mat-select>
+                    <mat-error *ngIf="isFieldInvalid('usuarios')">
+                        {{ getErrorMessage('usuarios') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+        <button type="submit" [disabled]="form.invalid" mat-button>Aceptar</button>
+
+        <!-- [disabled]="form.invalid" -->
+    </mat-dialog-actions>
+</form>

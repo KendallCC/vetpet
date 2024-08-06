@@ -1,0 +1,103 @@
+button {
+    font-size: 17px;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    background: #45568d;
+    color: white;
+    border-radius: 4px;
+   }
+   
+   .add{
+    margin-left: 1rem;
+    background-color: #28a745;
+   }
+
+
+   button:hover {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(30,144,255,1) 0%, rgba(0,212,255,1) 100%);
+   }
+   
+   button:active {
+    transform: translate(0em, 0.2em);
+   }
+
+   .contenedor{ 
+    display: flex; 
+    justify-content: center;
+    background-color: #ffffff;
+    margin-top: 5rem;
+  }
+
+
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 90%;
+  }
+
+
+  .contenedor_sucursal{
+    display: flex; 
+    justify-content: center; 
+    background-color: #ffffff;
+  }
+
+  .Pendiente {
+    color: #FFA500; /* Naranja */
+    width: 2rem;
+    font-weight: bold;
+  }
+  .Confirmada {
+    color: #28a745; /* Verde */
+    width: 2rem;
+    font-weight: bold;
+  }
+  .Reprogramada {
+    color: #17a2b8; /* Azul claro */
+    width: 2rem;
+    font-weight: bold;
+  }
+  .Completada {
+    color: #6c757d; /* Gris */
+    width: 2rem;
+    font-weight: bold;
+  }
+ .Cancelada  {
+  color: #dc3545; /* Rojo */
+    width: 2rem;
+    font-weight: bold;
+  }
+  .No_asistio {
+    color: #3f3440;  /* Negro */
+    width: 2rem;
+    font-weight: bold;
+  }
+
+   /* td[mat-cell]{
+    font-weight: bold;
+    
+  } */
+ 
+
+
+  th[mat-header-cell]{
+   font-size: 1.2rem;
+   font-weight: bold;
+  }
+
+    mat-card-title {
+        color: #333;
+      }
+      
+      mat-card-subtitle {
+        color: #666;
+        font-size: 0.9rem;
+      }
+      
+      mat-table {
+        width: 100%;
+        
+      }
+    
+      

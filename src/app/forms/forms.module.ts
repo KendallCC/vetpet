@@ -34,6 +34,7 @@ import { ModalCrearHorarioComponent } from './horarioBloqueo/modal-crear-horario
 import { ModalCrearBloqueoComponent } from './horarioBloqueo/modal-crear-bloqueo/modal-crear-bloqueo.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { AgregarEditarCitaComponent } from './cita/agregar-editar-cita/agregar-editar-cita.component';
+import { CrearEditarFacturacionComponent } from './facturar/crear-editar-facturacion/crear-editar-facturacion.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AgregarEditarCitaComponent } from './cita/agregar-editar-cita/agregar-e
     ModalCrearHorarioComponent,
     ModalCrearBloqueoComponent,
     AgregarEditarCitaComponent,
+    CrearEditarFacturacionComponent,
    
    
 

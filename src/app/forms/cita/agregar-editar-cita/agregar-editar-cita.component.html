@@ -58,14 +58,13 @@
             <div class="column">
                 <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_Servicio')">
                     <mat-label>Servicios</mat-label>
-                    <mat-select formControlName="id_Servicio">
-                        <mat-option *ngFor="let servicio of listaServicios" [value]="servicio.id">{{ servicio.nombre
-                            }}</mat-option>
+                    <mat-select formControlName="id_Servicio" multiple>
+                      <mat-option *ngFor="let servicio of listaServicios" [value]="servicio.id">{{ servicio.nombre }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="isFieldInvalid('id_Servicio')">
-                        {{ getErrorMessage('id_Servicio') }}
+                      {{ getErrorMessage('id_Servicio') }}
                     </mat-error>
-                </mat-form-field>
+                  </mat-form-field>
             </div>
             <div class="column">
                 <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_mascota')">
@@ -87,6 +86,7 @@
                     <input matInput formControlName="duracion" >
                 </mat-form-field>
             </div>
+            
             <div class="column">
                 <mat-form-field appearance="fill" [class.error]="isFieldInvalid('hora_inicio')">
                     <mat-label>Hora de Inicio</mat-label>
@@ -109,6 +109,30 @@
         <mat-error *ngIf="citaForm.errors?.['timeRangeInvalid']">
             La hora de inicio debe ser anterior a la hora de fin.
         </mat-error>
+
+        <div class="row">
+            <div class="row">
+                <div class="column">
+                  <mat-form-field appearance="fill" [class.error]="isFieldInvalid('estado')">
+                    <mat-label>Estado</mat-label>
+                    <input matInput [value]="citaForm.get('estado').value" [ngClass]="getEstadoClass(citaForm.get('estado').value)" disabled>
+                    <mat-error *ngIf="isFieldInvalid('estado')">
+                      {{ getErrorMessage('estado') }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <mat-form-field appearance="fill" [class.error]="isFieldInvalid('precio')">
+                    <mat-label>Precio</mat-label>
+                    <input matInput formControlName="precio" >
+                    <mat-error *ngIf="isFieldInvalid('precio')">
+                      {{ getErrorMessage('precio') }}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
         <div class="row">
             <div class="column">
                 <mat-form-field appearance="fill" [class.error]="isFieldInvalid('observaciones')">

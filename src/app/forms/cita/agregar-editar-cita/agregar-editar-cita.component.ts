@@ -11,24 +11,23 @@ import { listaServicios } from '../../../share/interfaces/servicio';
 import { FormvalidationsService } from '../../../share/formvalidations.service';
 import { MascotaService } from '../../../share/services/mascota.service';
 import { ListaMascota } from '../../../share/interfaces/mascota';
+import { EstadoCita } from '../../../share/interfaces/cita';
+import { FacturaService } from '../../../share/services/factura.service';
 
 @Component({
   selector: 'app-agregar-editar-cita',
   templateUrl: './agregar-editar-cita.component.html',
-  styleUrl: './agregar-editar-cita.component.css',
+  styleUrls: ['./agregar-editar-cita.component.css'],
 })
 export class AgregarEditarCitaComponent implements OnInit {
-
   listaClientes: listaClientes = [];
   sucursal: Sucursal;
   listaServicios: listaServicios = [];
-  selectedServicio: any;
-  SelectedSucursal: any;
-  ListaMascotas:ListaMascota=[];
+  selectedServicios: any[] = [];
+  selectedSucursal: any;
+  ListaMascotas: ListaMascota = [];
   citaForm: FormGroup;
-
-  idGerente:number;
-
+  idGerente: number;
 
   constructor(
     public dialogRef: MatDialogRef<AgregarEditarCitaComponent>,
@@ -36,9 +35,10 @@ export class AgregarEditarCitaComponent implements OnInit {
     private fb: FormBuilder,
     private citaService: CitasService,
     private clienteService: UsuarioService,
+    private facturaservice: FacturaService,
     private sucursalService: SucursalService,
     private servicioService: ServicesService,
-    private mascotaService:MascotaService,
+    private mascotaService: MascotaService,
     public formValidation: FormvalidationsService
   ) {
     this.citaForm = this.fb.group({
@@ -46,8 +46,8 @@ export class AgregarEditarCitaComponent implements OnInit {
       id_Cliente: ['', Validators.required],
       email: [{ value: '', disabled: true }, Validators.required],
       sucursal: [{ value: '', disabled: true }, Validators.required],
-      id_sucursal:[''],
-      id_Servicio: ['', Validators.required],
+      id_sucursal: [''],
+      id_Servicio: [[], Validators.required],
       id_mascota: ['', Validators.required],
       duracion: [{ value: '', disabled: true }],
       hora_inicio: ['', Validators.required],
@@ -55,10 +55,12 @@ export class AgregarEditarCitaComponent implements OnInit {
       observaciones: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       motivo: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       condicion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      vacunas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]]
+      vacunas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      estado: [{ value: EstadoCita[0], disabled: true }], // Nuevo campo estado
+      precio: [{ value: '', disabled: true }] // Nuevo campo precio
     }, { validators: this.timeRangeValidator });
 
-    this.idGerente=data.id
+    this.idGerente = data.id;
   }
 
   ngOnInit(): void {
@@ -73,19 +75,32 @@ export class AgregarEditarCitaComponent implements OnInit {
             email: cliente.correo_electronico
           });
           this.obtenerSucursal(cliente.id_sucursal);
-          this.obtenerMascotasCliente(cliente.id)
+          this.obtenerMascotasCliente(cliente.id);
         }
       }
     });
 
-    this.citaForm.get('id_Servicio').valueChanges.subscribe(servicioId => {
-      const servicio = this.listaServicios.find(s => s.id === servicioId);
-      if (servicio) {
-        this.selectedServicio = servicio;
+    this.citaForm.get('id_Servicio').valueChanges.subscribe(servicioIds => {
+      this.selectedServicios = servicioIds.map(id => this.listaServicios.find(s => s.id === id));
+      if (this.selectedServicios.length) {
+        const totalDuration = this.selectedServicios.reduce((total, servicio) => {
+          const duration = new Date(servicio.tiempo_servicio);
+          return total + duration.getUTCHours() * 60 + duration.getUTCMinutes();
+        }, 0);
+        const totalPrice = this.selectedServicios.reduce((total, servicio) => total + servicio.tarifa, 0);
+
+        const hours = Math.floor(totalDuration / 60);
+        const minutes = totalDuration % 60;
         this.citaForm.patchValue({
-          duracion: this.formatDuration(servicio.tiempo_servicio)
+          duracion: `${hours}h ${minutes}m`,
+          precio: totalPrice
         });
         this.updateHoraFin();
+      } else {
+        this.citaForm.patchValue({
+          duracion: '',
+          precio: ''
+        });
       }
     });
 
@@ -96,12 +111,10 @@ export class AgregarEditarCitaComponent implements OnInit {
 
   obtenerClientes() {
     this.clienteService.getClientes().subscribe((listaClientes) => {
-      this.clienteService.getCliente(this.idGerente).subscribe((gerente=>{
-        this.idGerente=gerente.id_sucursal
-        this.listaClientes = listaClientes.filter(e=>e.id_sucursal==this.idGerente);
-      }))
-
-      
+      this.clienteService.getCliente(this.idGerente).subscribe((gerente => {
+        this.idGerente = gerente.id_sucursal;
+        this.listaClientes = listaClientes.filter(e => e.id_sucursal == this.idGerente);
+      }));
     });
   }
 
@@ -110,9 +123,9 @@ export class AgregarEditarCitaComponent implements OnInit {
       this.sucursal = sucursal;
       this.citaForm.patchValue({
         sucursal: sucursal.nombre,
-        id_sucursal:sucursal.id
+        id_sucursal: sucursal.id
       });
-      this.SelectedSucursal=sucursal.id
+      this.selectedSucursal = sucursal.id;
     });
   }
 
@@ -122,30 +135,23 @@ export class AgregarEditarCitaComponent implements OnInit {
     });
   }
 
-  obtenerMascotasCliente(id:number){
-    this.mascotaService.getMascotasClientes(id).subscribe((ListaMascotas)=>{
-      this.ListaMascotas=ListaMascotas
-    })
-  }
-
-  
-
-  formatDuration(duration: string): string {
-    const time = new Date(duration);
-    const hours = time.getUTCHours();
-    const minutes = time.getUTCMinutes();
-    return `${hours}h ${minutes}m`;
+  obtenerMascotasCliente(id: number) {
+    this.mascotaService.getMascotasClientes(id).subscribe((ListaMascotas) => {
+      this.ListaMascotas = ListaMascotas;
+    });
   }
 
   updateHoraFin(): void {
     const horaInicio = this.citaForm.get('hora_inicio').value;
-    if (horaInicio && this.selectedServicio) {
+    if (horaInicio && this.selectedServicios.length) {
       const [hours, minutes] = horaInicio.split(':').map(Number);
-      const duration = new Date(this.selectedServicio.tiempo_servicio);
-      const durHours = duration.getUTCHours();
-      const durMinutes = duration.getUTCMinutes();
+      const totalDuration = this.selectedServicios.reduce((total, servicio) => {
+        const duration = new Date(servicio.tiempo_servicio);
+        return total + duration.getUTCHours() * 60 + duration.getUTCMinutes();
+      }, 0);
+
       const endTime = new Date();
-      endTime.setHours(hours + durHours, minutes + durMinutes);
+      endTime.setHours(hours, minutes + totalDuration);
 
       const formattedEndTime = endTime.toTimeString().slice(0, 5);
       this.citaForm.patchValue({
@@ -161,16 +167,15 @@ export class AgregarEditarCitaComponent implements OnInit {
   onSubmit(): void {
     if (this.citaForm.valid) {
       const reserva = this.citaForm.value;
-      console.log(reserva);
-      
-      this.citaService.postCita(reserva).subscribe( ()=> {
+      reserva.id_Servicio = this.selectedServicios.map(s => s.id);
+  
+      this.citaService.postCita(reserva).subscribe((response) => {
         this.dialogRef.close(true);
+        this.formValidation.mensajeExito("Cita agregada con éxito", 'Agregar');
       },
-      error => {
-        console.log(error.error);
-        
-        this.formValidation.mensajeError(error.error, 'Agregar');
-      })
+        error => {
+          this.formValidation.mensajeError(error.error, 'Agregar');
+        });
     }
   }
 
@@ -205,5 +210,24 @@ export class AgregarEditarCitaComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  getEstadoClass(estado: string): string {
+    switch (estado) {
+      case 'Pendiente':
+        return 'Pendiente';
+      case 'Confirmada':
+        return 'Confirmada';
+      case 'Reprogramada':
+        return 'Reprogramada';
+      case 'Completada':
+        return 'Completada';
+      case 'Cancelada':
+        return 'Cancelada';
+      case 'No_asistio':
+        return 'No_asistio';
+      default:
+        return '';
+    }
   }
 }

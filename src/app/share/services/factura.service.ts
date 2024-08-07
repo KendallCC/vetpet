@@ -18,6 +18,8 @@ export class FacturaService {
     return this.http.get<Factura>(`${this.APIURL}/factura/${Id}`)
   }
 
-
+  postFactura(factura:any):Observable<void>{
+    return this.http.post<void>(`${this.APIURL}/factura/`,factura)
+  }
 
 }

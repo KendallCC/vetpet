@@ -5,7 +5,8 @@
             <mat-label>Filtro</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Proforma" #input>
           </mat-form-field>
-          
+          <button mat-raised-button color="primary" (click)="agregarEditar()" class="add">Agregar</button>
+
           <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
           

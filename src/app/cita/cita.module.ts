@@ -14,7 +14,12 @@ import { MatCardModule } from '@angular/material/card';
 import { DetalleCitaComponent } from './detalle-cita/detalle-cita.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+
 @NgModule({
   declarations: [ListaCitaEncargadosComponent, DetalleCitaComponent],
   imports: [
@@ -29,7 +34,12 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatCardModule,
     MatListModule,
     MatDividerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatGridTile,
+    MatGridList
   ],
 })
 export class CitaModule {}

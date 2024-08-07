@@ -17,7 +17,16 @@ button {
     transform: translate(0em, 0.2em);
    }
 
+   .add{
+    margin-left: 1rem;
+    background-color: #28a745;
+   }
 
+ .mat-mdc-form-field {
+    font-size: 14px;
+    width: 90%;
+  }
+  
    .mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell{
     padding: 1rem;
   }

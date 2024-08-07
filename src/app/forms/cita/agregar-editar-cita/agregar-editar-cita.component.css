@@ -16,3 +16,37 @@ mat-form-field.error .mat-form-field-underline {
   mat-form-field.error .mat-form-field-ripple {
     background-color: red;
   }
+
+
+
+  
+  .Pendiente {
+    color: #FFA500 !important; /* Naranja */
+    font-weight: bold;
+  }
+  
+  .Confirmada {
+    color: #28a745 !important; /* Verde */
+    font-weight: bold;
+  }
+  
+  .Reprogramada {
+    color: #17a2b8 !important; /* Azul claro */
+    font-weight: bold;
+  }
+  
+  .Completada {
+    color: #6c757d !important; /* Gris */
+    font-weight: bold;
+  }
+  
+  .Cancelada {
+    color: #dc3545 !important; /* Rojo */
+    font-weight: bold;
+  }
+  
+  .No_asistio {
+    color: #3f3440 !important;  /* Negro */
+    font-weight: bold;
+  }
+  

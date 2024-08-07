@@ -3,45 +3,62 @@
 <mat-card>
   <mat-card-content>
 
+    <mat-form-field>
+      <mat-label>Filtro de Cliente</mat-label>
+      <mat-select (selectionChange)="applyClienteFilter($event)" placeholder="Seleccione un cliente">
+        <mat-option *ngFor="let cliente of ListaClientes" [value]="cliente.id">
+          {{cliente.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Filtro de Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" (dateChange)="applyFechaFilter($event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
     <mat-form-field>
       <mat-label>Filtro</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Confirmada" #input>
     </mat-form-field>
-    <button (click)="agregarEditar()" class="add">Agregar</button>
+
+    <button mat-raised-button color="primary" (click)="agregarEditar()" class="add">Agregar</button>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
 
         <!-- ID Column -->
-        <ng-container matColumnDef="id" >
+        <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td mat-cell *matCellDef="let row"> {{row.id }} </td>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
         </ng-container>
 
-        <!-- Progress Column -->
+        <!-- Fecha Cita Column -->
         <ng-container matColumnDef="fecha_cita">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de la cita </th>
-          <td mat-cell *matCellDef="let row"> {{row.fecha_cita| date : "longDate" : "es-ES"}}</td>
+          <td mat-cell *matCellDef="let row"> {{row.fecha_cita | date : "longDate"}} </td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- Hora Cita Column -->
         <ng-container matColumnDef="hora_cita">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora de la cita </th>
-          <td mat-cell *matCellDef="let row"> {{row.hora_cita | date : "hh:mm aaaaa" : "es-ES"}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.hora_cita | date : "h:mm aaaa"}} </td>
         </ng-container>
 
-        <!-- Fruit Column -->
-        <ng-container matColumnDef="estado" class="">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado cita</th>
+        <!-- Estado Column -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
           <td mat-cell *matCellDef="let row" class="{{row.estado}}"> {{row.estado}} </td>
         </ng-container>
 
-
+        <!-- Opciones Column -->
         <ng-container matColumnDef="opciones">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-          <td mat-cell *matCellDef="let row"> <button (click)="irDetalleCita(row.id)">Info</button></td>
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-button color="accent" (click)="irDetalleCita(row.id)">Info</button>
+          </td>
         </ng-container>
-
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -52,7 +69,7 @@
         </tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     </div>
   </mat-card-content>
-</mat-card> 
+</mat-card>

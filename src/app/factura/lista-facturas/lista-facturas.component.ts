@@ -54,4 +54,9 @@ export class ListaFacturasComponent implements AfterViewInit {
   irDetalle(id:number){
     this.router.navigate([`detallefactura/${id}`])
   }
+
+  agregarEditar(id?:number){
+    this.router.navigate([`facturar/`])
+  }
+
 }

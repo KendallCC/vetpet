@@ -22,6 +22,11 @@ button {
     background-color: #28a745;
    }
 
+   .edit{
+    margin-left: 1rem;
+    background-color: #142fca;
+   }
+
  .mat-mdc-form-field {
     font-size: 14px;
     width: 90%;

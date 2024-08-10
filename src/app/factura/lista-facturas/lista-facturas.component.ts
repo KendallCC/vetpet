@@ -7,6 +7,8 @@ import { FacturaService } from '../../share/services/factura.service';
 import { Factura, listaFactura } from '../../share/interfaces/factura';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { CrearEditarFacturacionComponent } from '../../forms/facturar/crear-editar-facturacion/crear-editar-facturacion.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-lista-facturas',
   templateUrl: './lista-facturas.component.html',
@@ -19,7 +21,7 @@ export class ListaFacturasComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public ListFactura: listaFactura = [];
-  constructor(private service: FacturaService,private router: Router) {
+  constructor(private service: FacturaService,private router: Router, public dialog: MatDialog) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.ListFactura);
 
@@ -56,7 +58,17 @@ export class ListaFacturasComponent implements AfterViewInit {
   }
 
   agregarEditar(id?:number){
-    this.router.navigate([`facturar/`])
+    console.log('agregar editar: ',id);
+    
+    const dialogRef = this.dialog.open(CrearEditarFacturacionComponent, {
+      width: '550px',
+      disableClose: true,
+      data: { idFactura: id },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getFacturas();
+    });
   }
 
 }

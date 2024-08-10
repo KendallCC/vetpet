@@ -22,4 +22,8 @@ export class FacturaService {
     return this.http.post<void>(`${this.APIURL}/factura/`,factura)
   }
 
+  updateFactura(id:number,factura:any):Observable<void>{
+    return this.http.put<void>(`${this.APIURL}/factura/${id}`,factura)
+  }
+
 }

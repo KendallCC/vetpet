@@ -35,7 +35,6 @@ export class AgregarEditarCitaComponent implements OnInit {
     private fb: FormBuilder,
     private citaService: CitasService,
     private clienteService: UsuarioService,
-    private facturaservice: FacturaService,
     private sucursalService: SucursalService,
     private servicioService: ServicesService,
     private mascotaService: MascotaService,

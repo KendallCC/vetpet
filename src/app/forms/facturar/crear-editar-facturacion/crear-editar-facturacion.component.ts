@@ -65,7 +65,7 @@ export class CrearEditarFacturacionComponent implements OnInit {
   }
   initForm() {
     this.facturaForm = this.fb.group({
-      fecha_factura: [new Date(), Validators.required],
+      fecha_factura: [{ value: new Date(), disabled: true }, Validators.required],
       sucursal: [{ value: '', disabled: true }],
       cliente: [null, Validators.required],
       encargado: [{ value: '', disabled: true }],
@@ -74,9 +74,11 @@ export class CrearEditarFacturacionComponent implements OnInit {
       subtotal: [{ value: this.subtotal, disabled: true }],
       impuesto: [{ value: this.impuesto, disabled: true }],
       total: [{ value: this.total, disabled: true }],
+      estado: [null, Validators.required], // Añadir el campo estado
+      metodo_pago: [null, Validators.required],
       selectedProduct: this.fb.group({
         producto: [null],
-        cantidad: [1,[Validators.min(1),Validators.max(15)]],
+        cantidad: [1, [Validators.required, Validators.min(1), Validators.max(15), Validators.pattern('^[0-9]*$')]], 
         precio_unitario: [{ value: '', disabled: true }],
       }),
       selectedService: this.fb.group({
@@ -225,11 +227,17 @@ export class CrearEditarFacturacionComponent implements OnInit {
 
   loadFactura(idFactura: number) {
     this.facturaService.getFactura(idFactura).subscribe(factura => {
+
+     console.log('factura: ',factura);
+     
+
       this.facturaForm.patchValue({
         fecha_factura: new Date(factura.fecha_factura),
         sucursal: factura.cita.sucursal.nombre,
         cliente: factura.cita.cliente.id,
         encargado: this.encargado.nombre,
+        estado:factura.estado,
+        metodo_pago:factura.metodo_pago
       });
   
       this.detalleProductos.clear();

@@ -6,3 +6,11 @@ mat-form-field {
   mat-dialog-actions {
     margin-top: 24px;
   }
+
+  .row{
+    display: flex;
+}
+.column{
+    flex: 50%;
+    margin: 0px 5px;
+}

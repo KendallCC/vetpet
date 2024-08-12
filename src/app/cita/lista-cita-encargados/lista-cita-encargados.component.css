@@ -36,7 +36,9 @@ button {
     width: 90%;
   }
 
-
+.filtro{
+  background-color: #FFA500;
+}
   .contenedor_sucursal{
     display: flex; 
     justify-content: center; 

@@ -5,7 +5,7 @@
 
     <mat-form-field>
       <mat-label>Filtro de Cliente</mat-label>
-      <mat-select (selectionChange)="applyClienteFilter($event)" placeholder="Seleccione un cliente">
+      <mat-select [(ngModel)]="selectedCliente" (selectionChange)="applyClienteFilter($event)" placeholder="Seleccione un cliente">
         <mat-option *ngFor="let cliente of ListaClientes" [value]="cliente.id">
           {{cliente.nombre}}
         </mat-option>
@@ -14,7 +14,7 @@
 
     <mat-form-field>
       <mat-label>Filtro de Fecha</mat-label>
-      <input matInput [matDatepicker]="picker" (dateChange)="applyFechaFilter($event)">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="applyFechaFilter($event)">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -23,8 +23,12 @@
       <mat-label>Filtro</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Confirmada" #input>
     </mat-form-field>
+    <button mat-raised-button class="filtro" (click)="clearFilters()">Limpiar Filtros</button>
+    <div class="filter-actions">
+      <button mat-raised-button color="primary" (click)="agregarEditar()" class="add">Agregar</button>
+     
+    </div>
 
-    <button mat-raised-button color="primary" (click)="agregarEditar()" class="add">Agregar</button>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
 

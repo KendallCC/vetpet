@@ -19,6 +19,8 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { FormsModule } from '@angular/forms'; // Asegúrate de importar esto
+import { ReactiveFormsModule } from '@angular/forms'; // Solo si estás usando formularios reactivos
 
 @NgModule({
   declarations: [ListaCitaEncargadosComponent, DetalleCitaComponent],
@@ -39,7 +41,9 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
     MatSelectModule,
     MatDatepickerModule,
     MatGridTile,
-    MatGridList
+    MatGridList,
+    FormsModule,
+    ReactiveFormsModule
   ],
 })
 export class CitaModule {}

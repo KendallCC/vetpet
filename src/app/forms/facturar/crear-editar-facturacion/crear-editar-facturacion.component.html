@@ -1,55 +1,70 @@
 <mat-dialog-content>
   <form [formGroup]="facturaForm">
-    <!-- Fecha de la Factura -->
-    <div>
-      <mat-form-field appearance="fill" [class.error]="isFieldInvalid('fecha_factura')">
-        <mat-label>Fecha Factura</mat-label>
-        <input matInput formControlName="fecha_factura" [matDatepicker]="picker">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="isFieldInvalid('fecha_factura')">
-          {{ getErrorMessage('fecha_factura') }}
-        </mat-error>
-      </mat-form-field >
+
+    <div style="display: flex; justify-content: center; align-items: center;">
+
+      <!-- Fecha de la Factura -->
+      <div>
+        <mat-form-field appearance="fill" [class.error]="isFieldInvalid('fecha_factura')">
+          <mat-label>Fecha Factura</mat-label>
+          <input matInput formControlName="fecha_factura" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="isFieldInvalid('fecha_factura')">
+            {{ getErrorMessage('fecha_factura') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
     </div>
 
-    <!-- Sucursal -->
-    <div>
-      <mat-form-field appearance="fill" [class.error]="isFieldInvalid('sucursal')">
-        <mat-label>Sucursal</mat-label>
-        <input matInput formControlName="sucursal">
-        <mat-error *ngIf="isFieldInvalid('sucursal')">
-          {{ getErrorMessage('sucursal') }}
-        </mat-error>
-      </mat-form-field >
+
+
+
+    <div class="row">
+      <div class="column">
+        <!-- Sucursal -->
+        <mat-form-field appearance="fill" [class.error]="isFieldInvalid('sucursal')">
+          <mat-label>Sucursal</mat-label>
+          <input matInput formControlName="sucursal">
+          <mat-error *ngIf="isFieldInvalid('sucursal')">
+            {{ getErrorMessage('sucursal') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-form-field>
+          <mat-label>Encargado</mat-label>
+          <input matInput formControlName="encargado">
+        </mat-form-field>
+      </div>
+
     </div>
+
+
 
     <!-- Cliente -->
-    <div>
-      <mat-form-field appearance="fill" [class.error]="isFieldInvalid('cliente')">
-        <mat-label>Cliente</mat-label>
-        <mat-select formControlName="cliente">
-          <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
-            {{ cliente.nombre }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="isFieldInvalid('cliente')">
-          {{ getErrorMessage('cliente') }}
-        </mat-error>
-      </mat-form-field >
-      
-      <mat-form-field >
-        <input matInput [value]="getClienteEmail()" placeholder="Email del Cliente" [disabled]="true">
-      </mat-form-field >
+    <div class="row">
+      <div class="column">
+        <mat-form-field appearance="fill" [class.error]="isFieldInvalid('cliente')">
+          <mat-label>Cliente</mat-label>
+          <mat-select formControlName="cliente">
+            <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+              {{ cliente.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isFieldInvalid('cliente')">
+            {{ getErrorMessage('cliente') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-form-field>
+          <input matInput [value]="getClienteEmail()" placeholder="Email del Cliente" [disabled]="true">
+        </mat-form-field>
+      </div>
     </div>
 
-    <!-- Encargado -->
-    <div>
-      <mat-form-field >
-        <mat-label>Encargado</mat-label>
-        <input matInput formControlName="encargado">
-      </mat-form-field >
-    </div>
 
     <!-- Detalle de Productos -->
     <h3>Productos</h3>
@@ -83,46 +98,56 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="['producto', 'cantidad', 'precio_unitario', 'total_item', 'acciones']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['producto', 'cantidad', 'precio_unitario', 'total_item', 'acciones']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['producto', 'cantidad', 'precio_unitario', 'total_item', 'acciones']">
+      </tr>
     </table>
 
-    <div [formGroup]="selectedProductForm" style="margin-top: 1rem;">
-      <mat-form-field appearance="fill" [class.error]="isFieldInvalid('producto')">
-        <mat-label>Producto</mat-label>
-        <mat-select formControlName="producto" (selectionChange)="onProductChange()">
-          <mat-option *ngFor="let producto of productos" [value]="producto.id">
-            {{ producto.nombre }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="isFieldInvalid('id_sucursal')">
-          {{ getErrorMessage('id_sucursal') }}
-        </mat-error>
-      </mat-form-field >
-
-      <div [formGroup]="selectedProductForm" style="margin-top: 1rem;">
-        <mat-form-field [class.error]="isFieldInvalid('selectedProduct.cantidad')">
-          <mat-label>Cantidad</mat-label>
-          <input matInput formControlName="cantidad" type="number">
-          <mat-error *ngIf="isFieldInvalid('selectedProduct.cantidad')">
-            {{ getErrorMessage('selectedProduct.cantidad') }}
-          </mat-error>
-        </mat-form-field>
+    <!-- Cliente -->
+    <div class="row">
+      <div class="column">
+        <div [formGroup]="selectedProductForm" style="margin-top: 1rem;">
+          <mat-form-field appearance="fill" [class.error]="isFieldInvalid('producto')">
+            <mat-label>Producto</mat-label>
+            <mat-select formControlName="producto" (selectionChange)="onProductChange()">
+              <mat-option *ngFor="let producto of productos" [value]="producto.id">
+                {{ producto.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="isFieldInvalid('id_sucursal')">
+              {{ getErrorMessage('id_sucursal') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
-      
+      <div class="column">
+        <div [formGroup]="selectedProductForm" style="margin-top: 1rem;">
+          <mat-form-field [class.error]="isFieldInvalid('selectedProduct.cantidad')">
+            <mat-label>Cantidad</mat-label>
+            <input matInput formControlName="cantidad" type="number">
+            <mat-error *ngIf="isFieldInvalid('selectedProduct.cantidad')">
+              {{ getErrorMessage('selectedProduct.cantidad') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-      <mat-form-field appearance="fill" [class.error]="isFieldInvalid('precio_unitario')">
-        <mat-label>Precio Unitario</mat-label>
-        <input matInput formControlName="precio_unitario" >
-        <mat-error *ngIf="isFieldInvalid('precio_unitario')">
-          {{ getErrorMessage('precio_unitario') }}
-        </mat-error>
-      </mat-form-field >
-      <button mat-button (click)="addProducto()">
-        {{ editingIndex !== null ? 'Actualizar Producto' : 'Agregar Producto' }}
-      </button>
+        
+      </div>
+      <div class="column">
+        <div [formGroup]="selectedProductForm" style="margin-top: 1rem;">
+          <mat-form-field [class.error]="isFieldInvalid('selectedProduct.precio_unitario')">
+            <mat-label>Precio Unitario</mat-label>
+            <input matInput formControlName="precio_unitario">
+            <mat-error *ngIf="isFieldInvalid('selectedProduct.precio_unitario')">
+              {{ getErrorMessage('selectedProduct.precio_unitario') }}
+            </mat-error>
+          </mat-form-field>
+         
+        </div>
+      </div>
     </div>
-
-   
+    <button mat-button (click)="addProducto()" style="background-color: rgb(179, 233, 30);">
+      {{ editingIndex !== null ? 'Actualizar Producto' : 'Agregar Producto' }}
+    </button>
     <!-- Detalle de Servicios -->
     <h3>Servicios</h3>
     <table mat-table [dataSource]="serviciosDataSource" class="mat-elevation-z8">
@@ -152,42 +177,59 @@
       <tr mat-row *matRowDef="let row; columns: ['servicio', 'precio_unitario', 'total_item']"></tr>
     </table>
 
-    
-    <!-- <div [formGroup]="selectedServiceForm">
-      <mat-form-field >
-        <mat-label>Servicio</mat-label>
-        <mat-select formControlName="servicio" (selectionChange)="onServiceChange()">
-          <mat-option *ngFor="let servicio of servicios" [value]="servicio.id">
-            {{ servicio.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field >
-      <mat-form-field >
-        <mat-label>Tarifa</mat-label>
-        <input matInput formControlName="tarifa" >
-      </mat-form-field > -->
-      <!-- <button mat-button (click)="addServicio()">Agregar Servicio</button> -->
-    <!-- </div> -->
 
     <!-- Resumen de la Factura -->
     <div>
       <h3>Resumen de Factura</h3>
       <div>
-        <mat-form-field >
+        <!-- Estado -->
+        <div class="row">
+          <div class="column">
+        <div>
+          <mat-form-field appearance="fill" [class.error]="isFieldInvalid('estado')">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="estado">
+              <mat-option value="Proforma">Proforma</mat-option>
+              <mat-option value="Facturada">Facturada</mat-option>
+            </mat-select>
+            <mat-error *ngIf="isFieldInvalid('estado')">
+              {{ getErrorMessage('estado') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+        <!-- Método de Pago -->
+        <div class="column">
+        <div>
+          <mat-form-field appearance="fill" [class.error]="isFieldInvalid('metodo_pago')">
+            <mat-label>Método de Pago</mat-label>
+            <mat-select formControlName="metodo_pago">
+              <mat-option value="Efectivo">Efectivo</mat-option>
+              <mat-option value="Tarjeta">Tarjeta</mat-option>
+              <mat-option value="Transferencia">Transferencia</mat-option>
+            </mat-select>
+            <mat-error *ngIf="isFieldInvalid('metodo_pago')">
+              {{ getErrorMessage('metodo_pago') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      </div>
+        <mat-form-field>
           <mat-label>Subtotal</mat-label>
           <input matInput formControlName="subtotal">
-        </mat-form-field >
-        <mat-form-field >
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Impuesto ({{ IMPUESTO_PORCENTAJE * 100 }}%)</mat-label>
           <input matInput formControlName="impuesto">
-        </mat-form-field >
-        <mat-form-field >
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Total</mat-label>
           <input matInput formControlName="total">
-        </mat-form-field >
+        </mat-form-field>
       </div>
     </div>
-  
+
   </form>
 </mat-dialog-content>
 

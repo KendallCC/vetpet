@@ -29,8 +29,15 @@ export class ListaCitaEncargadosComponent implements OnInit, OnDestroy, AfterVie
   variableGlobal: number;
   idSucursal: number;
   private subscription: Subscription;
-  factura:Factura;
+  factura: Factura;
   Sucursal: string = "";
+
+  // Filtros seleccionados
+  selectedCliente: number | null = null;
+  selectedDate: Date | null = null;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private Citaservice: CitasService,
@@ -38,13 +45,10 @@ export class ListaCitaEncargadosComponent implements OnInit, OnDestroy, AfterVie
     private globalService: GlobalService,
     private router: Router,
     public dialog: MatDialog,
-    public notificacion:FormvalidationsService
+    public notificacion: FormvalidationsService
   ) {
     this.dataSource = new MatTableDataSource(this.listaEncargado);
   }
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit(): void {
     this.obtenerCitas();
@@ -74,14 +78,12 @@ export class ListaCitaEncargadosComponent implements OnInit, OnDestroy, AfterVie
     this.clienteService.getClientes().subscribe(clientes => {
       // Filtrar clientes por idSucursal
       this.ListaClientes = clientes.filter(cliente => cliente.id_sucursal === this.idSucursal);
-   
     });
   }
 
   obtenerCitas() {
     this.Citaservice.getreservasEncargados(this.variableGlobal).subscribe(
       (data) => {
-       
         this.listaEncargado = data.sucursal.citas;
         this.Sucursal = data.sucursal.nombre;
         this.dataSource = new MatTableDataSource(this.listaEncargado);
@@ -129,6 +131,13 @@ export class ListaCitaEncargadosComponent implements OnInit, OnDestroy, AfterVie
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  clearFilters() {
+    // Limpiar los filtros de cliente y fecha, y refrescar la lista de citas
+    this.selectedCliente = null;
+    this.selectedDate = null;
+    this.obtenerCitas(); // Recarga las citas para mostrar todos los datos nuevamente
   }
 
   irDetalleCita(id: number) {

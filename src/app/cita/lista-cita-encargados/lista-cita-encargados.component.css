@@ -13,6 +13,10 @@ button {
     background-color: #28a745;
    }
 
+ .edit{
+    margin-left: 1rem;
+    background-color: #160ca8;
+   }
 
    button:hover {
     background: rgb(2,0,36);

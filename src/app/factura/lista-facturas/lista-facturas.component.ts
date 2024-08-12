@@ -85,7 +85,7 @@ export class ListaFacturasComponent implements AfterViewInit, OnDestroy {
     // Obtiene la lista de facturas desde el servicio y las carga en la tabla.
     this.service.getFacturas().subscribe({
       next: (result) => {
-        this.ListFactura = result;
+        this.ListFactura = result.filter(e=>e.cita.id_sucursal==this.idSucursal);
         this.dataSource = new MatTableDataSource(this.ListFactura);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

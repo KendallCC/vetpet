@@ -61,6 +61,7 @@
           <th mat-header-cell *matHeaderCellDef> </th>
           <td mat-cell *matCellDef="let row">
             <button mat-button color="accent" (click)="irDetalleCita(row.id)">Info</button>
+            <button mat-raised-button (click)="agregarEditar(row.id)" class="edit">Editar</button>
           </td>
         </ng-container>
 

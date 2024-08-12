@@ -147,7 +147,7 @@ export class ListaCitaEncargadosComponent implements OnInit, OnDestroy, AfterVie
   agregarEditar(id?: number) {
     const dialogRef = this.dialog.open(AgregarEditarCitaComponent, {
       width: '900px',
-      data: { id: this.variableGlobal },
+      data: { id: this.variableGlobal ,idCita:id},
       disableClose: true
     });
 

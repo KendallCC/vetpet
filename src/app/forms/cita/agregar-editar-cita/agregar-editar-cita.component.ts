@@ -6,13 +6,12 @@ import { UsuarioService } from '../../../share/services/usuario.service';
 import { SucursalService } from '../../../share/services/sucursal.service';
 import { ServicesService } from '../../../share/services/services.service';
 import { listaClientes } from '../../../share/interfaces/cliente';
-import { ListaSucursales, Sucursal } from '../../../share/interfaces/sucursal';
+import { Sucursal } from '../../../share/interfaces/sucursal';
 import { listaServicios } from '../../../share/interfaces/servicio';
 import { FormvalidationsService } from '../../../share/formvalidations.service';
 import { MascotaService } from '../../../share/services/mascota.service';
 import { ListaMascota } from '../../../share/interfaces/mascota';
 import { EstadoCita } from '../../../share/interfaces/cita';
-import { FacturaService } from '../../../share/services/factura.service';
 
 @Component({
   selector: 'app-agregar-editar-cita',
@@ -28,6 +27,8 @@ export class AgregarEditarCitaComponent implements OnInit {
   ListaMascotas: ListaMascota = [];
   citaForm: FormGroup;
   idGerente: number;
+  operacion: string;
+  estadosCita: string[] = ['Pendiente', 'Confirmada', 'Reprogramada', 'Completada', 'Cancelada', 'No_asistio'];
 
   constructor(
     public dialogRef: MatDialogRef<AgregarEditarCitaComponent>,
@@ -55,16 +56,21 @@ export class AgregarEditarCitaComponent implements OnInit {
       motivo: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       condicion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       vacunas: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      estado: [{ value: EstadoCita[0], disabled: true }], // Nuevo campo estado
-      precio: [{ value: '', disabled: true }] // Nuevo campo precio
+      estado: ['', Validators.required],
+      precio: [{ value: '', disabled: true }]
     }, { validators: this.timeRangeValidator });
-
+    this.operacion = 'Crear';
     this.idGerente = data.id;
   }
 
   ngOnInit(): void {
     this.obtenerClientes();
     this.obtenerServicios();
+
+    if (this.data && this.data.idCita) {
+      this.operacion = 'Editar';
+      this.loadCita(this.data.idCita);
+    }
 
     this.citaForm.get('id_Cliente').valueChanges.subscribe(clienteId => {
       if (clienteId) {
@@ -81,30 +87,56 @@ export class AgregarEditarCitaComponent implements OnInit {
 
     this.citaForm.get('id_Servicio').valueChanges.subscribe(servicioIds => {
       this.selectedServicios = servicioIds.map(id => this.listaServicios.find(s => s.id === id));
-      if (this.selectedServicios.length) {
-        const totalDuration = this.selectedServicios.reduce((total, servicio) => {
-          const duration = new Date(servicio.tiempo_servicio);
-          return total + duration.getUTCHours() * 60 + duration.getUTCMinutes();
-        }, 0);
-        const totalPrice = this.selectedServicios.reduce((total, servicio) => total + servicio.tarifa, 0);
-
-        const hours = Math.floor(totalDuration / 60);
-        const minutes = totalDuration % 60;
-        this.citaForm.patchValue({
-          duracion: `${hours}h ${minutes}m`,
-          precio: totalPrice
-        });
-        this.updateHoraFin();
-      } else {
-        this.citaForm.patchValue({
-          duracion: '',
-          precio: ''
-        });
-      }
+      this.recalcularDuracionYPrecio();
     });
 
     this.citaForm.get('hora_inicio').valueChanges.subscribe(() => {
       this.updateHoraFin();
+    });
+  }
+
+  loadCita(idCita: number): void {
+    this.citaService.getCita(idCita).subscribe(cita => {
+      const fechaCita = new Date(cita.hora_cita);
+      const horaInicio = fechaCita.toTimeString().slice(0, 5);
+
+      const totalDuration = cita.facturas[0].detalle_factura.reduce((total, detalle) => {
+        const duration = this.convertirTiempoServicioADuracion(detalle.servicio.tiempo_servicio);
+        return total + duration;
+      }, 0);
+
+      const [hours, minutes] = horaInicio.split(':').map(Number);
+      const horaFin = new Date(fechaCita);
+      horaFin.setHours(hours, minutes + totalDuration);
+      const formattedHoraFin = horaFin.toTimeString().slice(0, 5);
+
+      const duracionHoras = Math.floor(totalDuration / 60);
+      const duracionMinutos = totalDuration % 60;
+      const duracion = `${duracionHoras}h ${duracionMinutos}m`;
+
+      this.citaForm.patchValue({
+        fecha: new Date(cita.fecha_cita),
+        id_Cliente: cita.id_cliente,
+        email: cita.cliente.correo_electronico,
+        sucursal: cita.sucursal.nombre,
+        id_sucursal: cita.sucursal.id,
+        id_Servicio: cita.facturas[0].detalle_factura.map(df => df.id_servicio),
+        id_mascota: cita.id_mascota,
+        observaciones: cita.observaciones,
+        motivo: cita.motivo,
+        condicion: cita.condicion,
+        vacunas: cita.vacunas,
+        estado: cita.estado,
+        precio: cita.facturas[0].total,
+        hora_inicio: horaInicio,
+        duracion: duracion,
+        hora_fin: formattedHoraFin
+      });
+
+      this.selectedServicios = this.listaServicios.filter(s => cita.facturas[0].detalle_factura.some(df => df.id_servicio === s.id));
+      this.recalcularDuracionYPrecio();
+      this.updateHoraFin();
+      this.obtenerMascotasCliente(cita.id_cliente);
     });
   }
 
@@ -140,13 +172,44 @@ export class AgregarEditarCitaComponent implements OnInit {
     });
   }
 
+  convertirTiempoServicioADuracion(tiempoServicio: string): number {
+    const durationDate = new Date(tiempoServicio);
+    const hours = durationDate.getUTCHours();
+    const minutes = durationDate.getUTCMinutes();
+    return hours * 60 + minutes;
+  }
+
+  recalcularDuracionYPrecio(): void {
+    if (this.selectedServicios.length) {
+      const totalDuration = this.selectedServicios.reduce((total, servicio) => {
+        const duration = this.convertirTiempoServicioADuracion(servicio.tiempo_servicio);
+        return total + duration;
+      }, 0);
+      const totalPrice = this.selectedServicios.reduce((total, servicio) => total + servicio.tarifa, 0);
+
+      const hours = Math.floor(totalDuration / 60);
+      const minutes = totalDuration % 60;
+      this.citaForm.patchValue({
+        duracion: `${hours}h ${minutes}m`,
+        precio: totalPrice
+      });
+
+      this.updateHoraFin();
+    } else {
+      this.citaForm.patchValue({
+        duracion: '',
+        precio: ''
+      });
+    }
+  }
+
   updateHoraFin(): void {
     const horaInicio = this.citaForm.get('hora_inicio').value;
     if (horaInicio && this.selectedServicios.length) {
       const [hours, minutes] = horaInicio.split(':').map(Number);
       const totalDuration = this.selectedServicios.reduce((total, servicio) => {
-        const duration = new Date(servicio.tiempo_servicio);
-        return total + duration.getUTCHours() * 60 + duration.getUTCMinutes();
+        const duration = this.convertirTiempoServicioADuracion(servicio.tiempo_servicio);
+        return total + duration;
       }, 0);
 
       const endTime = new Date();
@@ -166,23 +229,36 @@ export class AgregarEditarCitaComponent implements OnInit {
   onSubmit(): void {
     if (this.citaForm.valid) {
       const reserva = this.citaForm.value;
-      reserva.id_Servicio = this.selectedServicios.map(s => s.id);
-  
-      this.citaService.postCita(reserva).subscribe((response) => {
-        this.dialogRef.close(true);
-        this.formValidation.mensajeExito("Cita agregada con éxito", 'Agregar');
-      },
-        error => {
-          this.formValidation.mensajeError(error.error, 'Agregar');
-        });
+
+      if (!reserva.id_Servicio.length) {
+        reserva.id_Servicio = this.selectedServicios.map(s => s.id);
+      }
+
+      if (this.data.idCita) {
+        this.citaService.updateCita(this.data.idCita, reserva).subscribe((response) => {
+          this.dialogRef.close(true);
+          this.formValidation.mensajeExito("Cita Actualizada con éxito", 'Actualizar');
+        },
+          error => {
+            this.formValidation.mensajeError(error.error, 'Editar');
+          });
+      } else {
+        this.citaService.postCita(reserva).subscribe((response) => {
+          this.dialogRef.close(true);
+          this.formValidation.mensajeExito("Cita agregada con éxito", 'Agregar');
+        },
+          error => {
+            this.formValidation.mensajeError(error.error, 'Agregar');
+          });
+      }
     }
   }
 
   dateFilter = (d: Date | null): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
+    today.setHours(0, 0, 0, 0);
     if (d) {
-      d.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
+      d.setHours(0, 0, 0, 0);
       return d >= today;
     }
     return false;

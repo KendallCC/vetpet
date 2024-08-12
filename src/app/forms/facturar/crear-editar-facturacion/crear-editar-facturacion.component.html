@@ -123,7 +123,7 @@
         <div [formGroup]="selectedProductForm" style="margin-top: 1rem;">
           <mat-form-field [class.error]="isFieldInvalid('selectedProduct.cantidad')">
             <mat-label>Cantidad</mat-label>
-            <input matInput formControlName="cantidad" type="number">
+            <input matInput formControlName="cantidad" type="number" appOnlyNumber>
             <mat-error *ngIf="isFieldInvalid('selectedProduct.cantidad')">
               {{ getErrorMessage('selectedProduct.cantidad') }}
             </mat-error>

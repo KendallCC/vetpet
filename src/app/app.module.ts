@@ -23,11 +23,12 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { ToastrModule } from 'ngx-toastr';
 import { SucursalModule } from './sucursal/sucursal.module';
 import { HorariobloqueoModule } from './horariobloqueo/horariobloqueo.module';
+import { OnlyNumberDirective } from './only-number.directive';
 
 registerLocaleData(localEsCR, 'es');
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, OnlyNumberDirective],
   imports: [
     BrowserModule,
     ToastrModule.forRoot(),

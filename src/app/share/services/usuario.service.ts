@@ -25,7 +25,7 @@ export class UsuarioService {
   }
 
   updateCliente(id:number,cliente:Cliente):Observable<void>{
-    return this.http.post<void>(`${this.APIURL}/usuario/${id}`,cliente)
+    return this.http.put<void>(`${this.APIURL}/usuario/${id}`,cliente)
   }
 
 }

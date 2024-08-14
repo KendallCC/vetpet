@@ -1,0 +1,72 @@
+button {
+    font-size: 17px;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    background: #45568d;
+    color: white;
+    border-radius: 4px;
+}
+
+.add {
+    margin-left: 1rem;
+    background-color: #28a745;
+}
+
+.edit {
+    margin-left: 1rem;
+    background-color: #4138c2;
+    color: white;
+}
+
+button:hover {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(30, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+
+button:active {
+    transform: translate(0em, 0.2em);
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    margin-top: 5rem;
+}
+
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 90%;
+}
+
+.filtro {
+    background-color: #FFA500;
+}
+
+.contenedor_sucursal {
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+
+th[mat-header-cell] {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+mat-card-title {
+    color: #333;
+}
+
+mat-card-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+mat-table {
+    width: 100%;
+
+}

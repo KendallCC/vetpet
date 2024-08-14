@@ -1,3 +1,5 @@
+import { Sucursal } from "./sucursal"
+
 export type listaClientes=Cliente[]
 
 export interface Cliente {
@@ -10,4 +12,5 @@ export interface Cliente {
     contrasena: string
     rol: string
     id_sucursal: number
+    sucursal?:Sucursal
   }

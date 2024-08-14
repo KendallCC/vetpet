@@ -11,7 +11,7 @@ import { listaServicios } from '../../../share/interfaces/servicio';
 import { FormvalidationsService } from '../../../share/formvalidations.service';
 import { MascotaService } from '../../../share/services/mascota.service';
 import { ListaMascota } from '../../../share/interfaces/mascota';
-import { EstadoCita } from '../../../share/interfaces/cita';
+
 
 @Component({
   selector: 'app-agregar-editar-cita',

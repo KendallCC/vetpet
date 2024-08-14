@@ -4,6 +4,7 @@ import { TablaServiciosComponent } from './Servicios/tabla-servicios/tabla-servi
 import { TablaProductosComponent } from './productos/tabla-productos/tabla-productos.component';
 import { TablaSucursalesComponent } from './Sucursales/tabla-sucursales/tabla-sucursales.component';
 import { TablaBloqueoHorarioComponent } from './horarioBloqueo/tabla-bloqueo-horario/tabla-bloqueo-horario.component';
+import { TablausuariosComponent } from './usuario/tablausuarios/tablausuarios.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,9 @@ const routes: Routes = [
   },
   {
     path:'tablabBloqueoHorario',component:TablaBloqueoHorarioComponent
+  },
+  {
+    path:'TablaUsuarios',component:TablausuariosComponent
   }
 ];
 

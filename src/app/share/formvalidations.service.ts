@@ -37,6 +37,9 @@ export class FormvalidationsService {
           case 'max':
             const max = control.errors['max'].max;
             return `No puede ser más de ${max}`;
+            case 'email':
+              const email = control.errors['email'].email;
+              return `Correo electronico no valido`;  
           case 'pattern':
             return 'Solo se permiten números';
             case 'timeRangeInvalid':

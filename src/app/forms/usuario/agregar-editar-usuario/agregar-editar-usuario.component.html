@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>{{ data.id ? 'Editar Usuario' : 'Agregar Usuario' }}</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="usuarioForm">
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('nombre')">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                    <mat-error *ngIf="isFieldInvalid('nombre')">
+                        {{ getErrorMessage('nombre') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('telefono')">
+                  <mat-label>Teléfono</mat-label>
+                  <input matInput formControlName="telefono" mask="0000-0000" prefix="+506 " [showMaskTyped]="true">
+                  <mat-error *ngIf="isFieldInvalid('telefono')">
+                    {{ getErrorMessage('telefono') }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('correo_electronico')">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput formControlName="correo_electronico">
+                    <mat-error *ngIf="isFieldInvalid('correo_electronico')">
+                        {{ getErrorMessage('correo_electronico') }}
+                    </mat-error>
+                    
+                </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('direccion')">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput formControlName="direccion">
+                    <mat-error *ngIf="isFieldInvalid('direccion')">
+                        {{ getErrorMessage('direccion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('fecha_nacimiento')">
+                    <mat-label>Fecha de Nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" formControlName="fecha_nacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker ></mat-datepicker>
+                    <mat-error *ngIf="isFieldInvalid('fecha_nacimiento')">
+                      {{ getErrorMessage('fecha_nacimiento') }}
+                    </mat-error>
+                  </mat-form-field>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill" [class.error]="isFieldInvalid('rol')">
+                    <mat-label>Rol</mat-label>
+                    <mat-select formControlName="rol">
+                        <mat-option *ngFor="let rol of roles" [value]="rol">{{rol}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isFieldInvalid('rol')">
+                        {{ getErrorMessage('rol') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_sucursal')">
+            <mat-label>Sucursal</mat-label>
+            <mat-select formControlName="id_sucursal">
+                <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.id">{{sucursal.nombre}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="isFieldInvalid('id_sucursal')">
+                {{ getErrorMessage('id_sucursal') }}
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button color="primary" (click)="onSave()">Guardar</button>
+</mat-dialog-actions>

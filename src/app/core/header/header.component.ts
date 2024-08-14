@@ -53,4 +53,9 @@ export class HeaderComponent implements OnInit{
   irMantenimientoHorarios(){
     this.router.navigate(['tablabBloqueoHorario'])
   }
+
+  irMantenimientoUsuarios(){
+    this.router.navigate(['TablaUsuarios'])
+  }
+
 }

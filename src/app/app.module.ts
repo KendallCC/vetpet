@@ -25,10 +25,23 @@ import { SucursalModule } from './sucursal/sucursal.module';
 import { HorariobloqueoModule } from './horariobloqueo/horariobloqueo.module';
 import { OnlyNumberDirective } from './only-number.directive';
 
+import { DetalleUsuarioComponent } from './usuario/DetalleUsuario/detalle-usuario/detalle-usuario.component';
+import { UsuarioModule } from './usuario/usuario.module';
+
+
+// Importar directiva y pipe de ngx-mask
+import { IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
+
 registerLocaleData(localEsCR, 'es');
 
+// Configuración de máscara
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
+
+
 @NgModule({
-  declarations: [AppComponent, OnlyNumberDirective],
+  declarations: [AppComponent, OnlyNumberDirective, DetalleUsuarioComponent],
   imports: [
     BrowserModule,
     ToastrModule.forRoot(),
@@ -50,15 +63,17 @@ registerLocaleData(localEsCR, 'es');
 
     //!Rutas de modulos
     AppRoutingModule,
+      UsuarioModule,
    
-     
+
    
   ],
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
     { provide: LOCALE_ID, useValue: 'es-CR' },
-    provideNativeDateAdapter()
+    provideNativeDateAdapter(),
+    provideEnvironmentNgxMask(maskConfig)
   ],
   bootstrap: [AppComponent],
 })

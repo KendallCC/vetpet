@@ -91,6 +91,7 @@ export class ModalCrearHorarioComponent implements OnInit {
 
       this.horarioService.createHorario(horarioData).subscribe(
         () => {
+          this.formvalidadation.mensajeExito("El horario se agrego con exito", 'Agregar');
           this.dialogRef.close(true);
         },
         error => {

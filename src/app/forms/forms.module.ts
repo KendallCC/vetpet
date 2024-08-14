@@ -36,6 +36,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { AgregarEditarCitaComponent } from './cita/agregar-editar-cita/agregar-editar-cita.component';
 import { CrearEditarFacturacionComponent } from './facturar/crear-editar-facturacion/crear-editar-facturacion.component';
 
+import { AgregarEditarUsuarioComponent } from './usuario/agregar-editar-usuario/agregar-editar-usuario.component';
+import { TablausuariosComponent } from './usuario/tablausuarios/tablausuarios.component';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+
 @NgModule({
   declarations: [
     TablaProductosComponent,
@@ -49,6 +53,8 @@ import { CrearEditarFacturacionComponent } from './facturar/crear-editar-factura
     ModalCrearBloqueoComponent,
     AgregarEditarCitaComponent,
     CrearEditarFacturacionComponent,
+    TablausuariosComponent,
+    AgregarEditarUsuarioComponent,
    
    
 
@@ -69,7 +75,9 @@ import { CrearEditarFacturacionComponent } from './facturar/crear-editar-factura
     MatDatepickerModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatGridListModule
+    MatGridListModule,
+    NgxMaskDirective,  // Agregar directiva de máscara
+    NgxMaskPipe     
   ]
 })
 export class FormsModule { }

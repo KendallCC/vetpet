@@ -66,6 +66,7 @@ export class ModalCrearHorarioComponent implements OnInit {
       
       const fecha = new Date(formValues.fecha);
       const fechaActual = new Date();
+      
       fechaActual.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
       fecha.setHours(0, 0, 0, 0); // Ignorar la hora y comparar solo la fecha
 

@@ -39,6 +39,8 @@ import { CrearEditarFacturacionComponent } from './facturar/crear-editar-factura
 import { AgregarEditarUsuarioComponent } from './usuario/agregar-editar-usuario/agregar-editar-usuario.component';
 import { TablausuariosComponent } from './usuario/tablausuarios/tablausuarios.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
+import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     CrearEditarFacturacionComponent,
     TablausuariosComponent,
     AgregarEditarUsuarioComponent,
+    RegistrarUsuarioComponent,
+    UsuarioLoginComponent,
    
    
 

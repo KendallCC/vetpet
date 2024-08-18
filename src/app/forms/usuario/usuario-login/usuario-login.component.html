@@ -1,0 +1,29 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form mat-elevation-z8">
+    <p class="title">Iniciar Sesión</p>
+    <p class="message">Accede a tu cuenta para continuar.</p>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput type="email" formControlName="correo_electronico" required>
+        <mat-error *ngIf="loginForm.get('correo_electronico')?.invalid && loginForm.get('correo_electronico')?.touched">
+            Correo electrónico es requerido y debe ser válido
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="contrasena" required>
+        <mat-error *ngIf="loginForm.get('contrasena')?.hasError('required') && loginForm.get('contrasena')?.touched">
+            Contraseña es requerida
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('contrasena')?.hasError('minlength') && loginForm.get('contrasena')?.touched">
+            La contraseña debe tener al menos 6 caracteres
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="submit" type="submit" [disabled]="loginForm.invalid">
+        Iniciar Sesión
+    </button>
+
+    <p class="signin">¿No tienes una cuenta? <a href="Registrar">Regístrate</a></p>
+</form>

@@ -28,4 +28,9 @@ export class UsuarioService {
     return this.http.put<void>(`${this.APIURL}/usuario/${id}`,cliente)
   }
 
+  postClienteLogin(cliente:Cliente):Observable<void>{
+    return this.http.post<void>(`${this.APIURL}/usuario/Login`,cliente)
+  }
+
+
 }

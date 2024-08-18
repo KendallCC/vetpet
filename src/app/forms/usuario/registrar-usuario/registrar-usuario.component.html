@@ -1,0 +1,72 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="form mat-elevation-z8">
+    <p class="title">Registro de Cliente</p>
+    <p class="message">Registrese y asígne su sucursal.</p>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" required>
+        <mat-error *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched">
+            Nombre es requerido
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Teléfono</mat-label>
+        <input matInput type="text" formControlName="telefono" required>
+        <mat-error *ngIf="registroForm.get('telefono')?.invalid && registroForm.get('telefono')?.touched">
+            Teléfono es requerido y debe tener exactamente 8 dígitos numéricos
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput type="email" formControlName="correo_electronico" required>
+        <mat-error *ngIf="registroForm.get('correo_electronico')?.invalid && registroForm.get('correo_electronico')?.touched">
+            Correo electrónico es requerido y debe ser válido
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion" required>
+        <mat-error *ngIf="registroForm.get('direccion')?.invalid && registroForm.get('direccion')?.touched">
+            Dirección es requerida
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" required (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="registroForm.get('fecha_nacimiento')?.invalid && registroForm.get('fecha_nacimiento')?.touched">
+            Fecha de nacimiento es requerida
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="contrasena" required>
+        <mat-error *ngIf="registroForm.get('contrasena')?.invalid && registroForm.get('contrasena')?.touched">
+            Contraseña es requerida y debe tener al menos 6 caracteres
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Sucursal</mat-label>
+        <mat-select formControlName="id_sucursal" required>
+            <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.id">
+                {{ sucursal.nombre }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="registroForm.get('id_sucursal')?.invalid && registroForm.get('id_sucursal')?.touched">
+            Sucursal es requerida
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="submit" type="submit" [disabled]="registroForm.invalid">
+        Registrar Cliente
+    </button>
+
+    <p class="signin">¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
+</form>

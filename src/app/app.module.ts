@@ -30,7 +30,7 @@ import { UsuarioModule } from './usuario/usuario.module';
 
 
 // Importar directiva y pipe de ngx-mask
-import { IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
+import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask';
 
 registerLocaleData(localEsCR, 'es');
 

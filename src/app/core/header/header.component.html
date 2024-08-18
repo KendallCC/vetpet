@@ -1,24 +1,49 @@
 <mat-toolbar color="primary">
   <img src="../../../assets/Logo.png" alt="Logo" style="height: 50px;">
   <span class="toolbar-title vetpet" (click)="irinicio()">VetPet</span>
-  <span class="example-spacer"></span>
-  <span mat-button  class="options" (click)="irServicios()">Servicios</span>
 
   <span class="example-spacer"></span>
+  <span mat-button class="options" (click)="irServicios()">Servicios</span>
   <span mat-button class="options" (click)="irProducto()">Productos</span>
+  <span mat-button class="options" (click)="irAcerca()">Acerca de Nosotros</span>
 
   <span class="example-spacer"></span>
-  <span mat-button  class="options" (click)="irAcerca()">Acerca de Nosotros</span>
 
-  <span class="example-spacer"></span>
-  <span mat-button [matMenuTriggerFor]="menu2" class="options" >Encargado</span>
-  <mat-menu #menu2="matMenu">
-    <button mat-menu-item (click)="irFactura()">Facturacion</button>
-    <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
-    <button mat-menu-item (click)="irMantenimientoServices()">Mantenimiento servicios</button>
-    <button mat-menu-item (click)="irMantenimientoProductos()">Mantenimiento Productos</button>
-    <button mat-menu-item (click)="irMantenimientoSucursales()">Mantenimiento Sucursales</button>
-    <button mat-menu-item (click)="irMantenimientoHorarios()">Mantenimiento Horarios y bloqueos</button>
-    <button mat-menu-item (click)="irMantenimientoUsuarios()">Mantenimiento Usuarios</button>
+  <span mat-button [matMenuTriggerFor]="menuUser" class="options">{{nombre}}</span>
+  <mat-menu #menuUser="matMenu">
+    <div class="user-info">
+      <button mat-menu-item disabled>{{correo}}</button>
+      <mat-divider></mat-divider>
+
+      <!-- Dropdown para Administrador -->
+      <ng-container *ngIf="rol === 'administrador'">
+        <button mat-menu-item [matMenuTriggerFor]="adminMenu">Administrador</button>
+        <mat-menu #adminMenu="matMenu">
+          <button mat-menu-item (click)="irFactura()">Facturación</button>
+          <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
+          <button mat-menu-item (click)="irMantenimientoServices()">Mantenimiento Servicios</button>
+          <button mat-menu-item (click)="irMantenimientoProductos()">Mantenimiento Productos</button>
+          <button mat-menu-item (click)="irMantenimientoSucursales()">Mantenimiento Sucursales</button>
+          <button mat-menu-item (click)="irMantenimientoHorarios()">Mantenimiento Horarios y Bloqueos</button>
+          <button mat-menu-item (click)="irMantenimientoUsuarios()">Mantenimiento Usuarios</button>
+        </mat-menu>
+      </ng-container>
+
+      <!-- Dropdown para Encargado -->
+      <ng-container *ngIf="rol === 'encargado'">
+        <button mat-menu-item [matMenuTriggerFor]="encargadoMenu">Encargado</button>
+        <mat-menu #encargadoMenu="matMenu">
+          <button mat-menu-item (click)="irFactura()">Facturación</button>
+          <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
+          <button mat-menu-item (click)="irMantenimientoServices()">Mantenimiento Servicios</button>
+          <button mat-menu-item (click)="irMantenimientoProductos()">Mantenimiento Productos</button>
+          <button mat-menu-item (click)="irMantenimientoSucursales()">Mantenimiento Sucursales</button>
+          <button mat-menu-item (click)="irMantenimientoHorarios()">Mantenimiento Horarios y Bloqueos</button>
+        </mat-menu>
+      </ng-container>
+
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+    </div>
   </mat-menu>
 </mat-toolbar>

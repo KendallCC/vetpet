@@ -27,3 +27,32 @@ mat-toolbar {
 .vetpet{
   cursor: pointer;
 }
+
+.options {
+  margin-right: 2rem; /* Ajusta el valor según sea necesario */
+}
+
+.user-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.user-name {
+  font-weight: bold;
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.user-email {
+  font-size: 0.9em;
+  color: grey;
+  margin: 0;
+}
+
+.mat-menu-item {
+  justify-content: center;
+}
+
+.mat-divider {
+  margin: 10px 0;
+}

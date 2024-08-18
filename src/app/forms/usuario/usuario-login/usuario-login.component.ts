@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../share/services/usuario.service';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router'
+import { FormvalidationsService } from '../../../share/formvalidations.service';
+import { AuthService } from '../../../share/services/auth.service';
 @Component({
   selector: 'app-usuario-login',
   templateUrl: './usuario-login.component.html',
@@ -17,6 +19,8 @@ export class UsuarioLoginComponent implements OnInit{
     private fb: FormBuilder,
     private usuarioService:UsuarioService,
     private router: Router,
+    private formuarioService:FormvalidationsService,
+    private authService: AuthService
     
   ) {
     this.loginForm = this.fb.group({
@@ -27,34 +31,34 @@ export class UsuarioLoginComponent implements OnInit{
 
   ngOnInit(): void {}
 
-
   onSubmit() {
     if (this.loginForm.valid) {
       this.usuarioService.postClienteLogin(this.loginForm.value).subscribe({
-        next: (response:any) => {
+        next: (response: any) => {
           // Guardar el token en localStorage
-
           const token = response.token;
 
           console.log(token);
           
           // Decodificar el token para obtener la información del usuario
-          const decodedToken:any = jwtDecode(token);
-          
-          // Guardar la información del usuario en localStorage
-          localStorage.setItem('user', JSON.stringify({
+          const decodedToken: any = jwtDecode(token);
+
+          // Usar AuthService para manejar el estado del usuario
+          this.authService.login({
             id: decodedToken.id,
             nombre: decodedToken.nombre,
             correo_electronico: decodedToken.correo_electronico,
             rol: decodedToken.rol
-          }));
+          });
 
+          this.formuarioService.mensajeExito('Login exitoso', 'Inicio de sesión');
+          
           // Redirigir a la página de inicio
           this.router.navigate(['/inicio']);
         },
         error: (err) => {
-          console.error('Error de autenticación:', err);
-          // Mostrar un mensaje de error o manejar el error de otra manera
+          console.log(err.error.message);
+          this.formuarioService.mensajeError(err.error.message, 'Inicio de sesión');
         }
       });
     }

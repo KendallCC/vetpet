@@ -7,30 +7,41 @@ import { TablaBloqueoHorarioComponent } from './horarioBloqueo/tabla-bloqueo-hor
 import { TablausuariosComponent } from './usuario/tablausuarios/tablausuarios.component';
 import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
 import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.component';
+import { roleGuard } from '../auth/role.guard';
 
 
 const routes: Routes = [
-  
+
   {
-    path:'tablaServicios',component:TablaServiciosComponent,
+    path: 'tablaServicios', component: TablaServiciosComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['administrador', 'encargado'] }
   },
   {
-    path:'tablaProductos',component:TablaProductosComponent
+    path: 'tablaProductos', component: TablaProductosComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['administrador', 'encargado'] }
   },
   {
-    path:'tablaSucursales',component:TablaSucursalesComponent
+    path: 'tablaSucursales', component: TablaSucursalesComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['administrador', 'encargado'] }
   },
   {
-    path:'tablabBloqueoHorario',component:TablaBloqueoHorarioComponent
+    path: 'tablabBloqueoHorario', component: TablaBloqueoHorarioComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['administrador', 'encargado'] }
   },
   {
-    path:'TablaUsuarios',component:TablausuariosComponent
+    path: 'TablaUsuarios', component: TablausuariosComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['administrador', 'encargado'] }
   },
   {
-    path:'Registrar',component:RegistrarUsuarioComponent
+    path: 'Registrar', component: RegistrarUsuarioComponent
   },
   {
-    path:'login',component:UsuarioLoginComponent
+    path: 'login', component: UsuarioLoginComponent
   }
 ];
 

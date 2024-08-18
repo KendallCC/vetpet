@@ -5,17 +5,19 @@ import { FooterComponent } from './footer/footer.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDivider } from '@angular/material/divider';
+
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent
   ],
   imports: [
-    CommonModule,MatToolbarModule,MatIconModule,MatMenuModule
+    CommonModule,MatToolbarModule,MatIconModule,MatMenuModule,MatDivider
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,MatDivider
   ]
 })
 export class CoreModule { }

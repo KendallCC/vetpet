@@ -12,11 +12,12 @@ export interface Cita {
   condicion: string;
   estado: string;
   fecha_cita: string;
-  id: number;
+  id?: number;
   hora_cita: string;
   motivo: string;
   observaciones: string;
   vacunas: string;
+  duracion:number;
   id_cliente: number;
   id_mascota: number;
   id_servicio: number | null;

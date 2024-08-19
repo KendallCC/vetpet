@@ -41,6 +41,11 @@ import { TablausuariosComponent } from './usuario/tablausuarios/tablausuarios.co
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
 import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.component';
+import { AgendaCitasComponent } from './cita/agenda-citas/agenda-citas.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { AgregarCitaModalComponent } from './cita/agregar-cita-modal/agregar-cita-modal.component';
+
+
 
 @NgModule({
   declarations: [
@@ -59,12 +64,15 @@ import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.com
     AgregarEditarUsuarioComponent,
     RegistrarUsuarioComponent,
     UsuarioLoginComponent,
+    AgendaCitasComponent,
+    AgregarCitaModalComponent,
    
    
 
   ],
   imports: [
     CommonModule,
+    FullCalendarModule, // Add FullCalendarModule here
     FormsRoutingModule,
     MatTableModule,
     MatPaginatorModule,
@@ -81,7 +89,9 @@ import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.com
     ReactiveFormsModule,
     MatGridListModule,
     NgxMaskDirective,  // Agregar directiva de máscara
-    NgxMaskPipe     
+    NgxMaskPipe,
+  
+ 
   ]
 })
 export class FormsModule { }

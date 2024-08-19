@@ -43,12 +43,15 @@ export class UsuarioLoginComponent implements OnInit{
           // Decodificar el token para obtener la información del usuario
           const decodedToken: any = jwtDecode(token);
 
+          console.log(decodedToken);
+          
           // Usar AuthService para manejar el estado del usuario
           this.authService.login({
             id: decodedToken.id,
             nombre: decodedToken.nombre,
             correo_electronico: decodedToken.correo_electronico,
-            rol: decodedToken.rol
+            rol: decodedToken.rol,
+            id_sucursal:decodedToken.sucursal
           });
 
           this.formuarioService.mensajeExito('Login exitoso', 'Inicio de sesión');

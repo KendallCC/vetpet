@@ -24,6 +24,10 @@ export class CitasService {
     return this.http.get<Cita>(`${this.APIURL}/cita/${Id}`)
   }
 
+  ListarCitasPorSucursalCliente(Id:number):Observable<listaCitas>{
+    return this.http.get<listaCitas>(`${this.APIURL}/cita/sucursal/${Id}`)
+  }
+
   postCita(cita:Cita):Observable <void> {
     return this.http.post<void>(`${this.APIURL}/cita/`,cita)
   }

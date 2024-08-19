@@ -8,6 +8,7 @@ import { TablausuariosComponent } from './usuario/tablausuarios/tablausuarios.co
 import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
 import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.component';
 import { roleGuard } from '../auth/role.guard';
+import { AgendaCitasComponent } from './cita/agenda-citas/agenda-citas.component';
 
 
 const routes: Routes = [
@@ -38,11 +39,15 @@ const routes: Routes = [
     data: { roles: ['administrador', 'encargado'] }
   },
   {
+    path: 'agendacita', component: AgendaCitasComponent
+  },
+  {
     path: 'Registrar', component: RegistrarUsuarioComponent
   },
   {
     path: 'login', component: UsuarioLoginComponent
-  }
+  },
+  
 ];
 
 @NgModule({

@@ -298,7 +298,8 @@ export class AgregarEditarCitaComponent implements OnInit {
       if (!reserva.id_Servicio.length) {
         reserva.id_Servicio = this.selectedServicios.map((s) => s.id);
       }
-
+      console.log(reserva);
+      
       if (this.data.idCita) {
         this.citaService.updateCita(this.data.idCita, reserva).subscribe(
           (response) => {

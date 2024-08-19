@@ -28,8 +28,6 @@ import { OnlyNumberDirective } from './only-number.directive';
 import { DetalleUsuarioComponent } from './usuario/DetalleUsuario/detalle-usuario/detalle-usuario.component';
 import { UsuarioModule } from './usuario/usuario.module';
 
-
-// Importar directiva y pipe de ngx-mask
 import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask';
 
 registerLocaleData(localEsCR, 'es');
@@ -45,6 +43,7 @@ const maskConfig: Partial<IConfig> = {
   imports: [
     BrowserModule,
     ToastrModule.forRoot(),
+
     //!Modulos propios creados
     HorariobloqueoModule,
     MatCardModule,
@@ -65,7 +64,8 @@ const maskConfig: Partial<IConfig> = {
     AppRoutingModule,
       UsuarioModule,
    
-
+   
+  
    
   ],
   providers: [

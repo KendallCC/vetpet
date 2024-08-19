@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>Crear Cita</h2>
+<mat-dialog-content>
+  <form [formGroup]="citaForm" (ngSubmit)="onSubmit()">
+    <!-- Fecha -->
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha</mat-label>
+      <input matInput formControlName="fecha" [matDatepicker]="picker" readonly>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Hora de Inicio -->
+    <mat-form-field appearance="fill">
+        <mat-label>Hora de Inicio</mat-label>
+        <input matInput type="time" formControlName="hora_inicio">
+      </mat-form-field>
+
+    <!-- Hora de Fin -->
+    <mat-form-field appearance="fill">
+      <mat-label>Hora de Fin</mat-label>
+      <input matInput type="time" formControlName="hora_fin" >
+    </mat-form-field>
+
+    <!-- Duración -->
+    <mat-form-field appearance="fill">
+      <mat-label>Duración</mat-label>
+      <input matInput formControlName="duracion" >
+    </mat-form-field>
+
+    <!-- Precio -->
+    <mat-form-field appearance="fill">
+      <mat-label>Precio</mat-label>
+      <input matInput formControlName="precio" >
+    </mat-form-field>
+
+    <!-- Cliente -->
+    <mat-form-field appearance="fill">
+      <mat-label>Cliente</mat-label>
+      <input matInput formControlName="nombre_cliente" readonly>
+    </mat-form-field>
+
+    <!-- Correo Electrónico -->
+    <mat-form-field appearance="fill">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput formControlName="correo_electronico" >
+    </mat-form-field>
+
+    <!-- Mascota -->
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_mascota')">
+      <mat-label>Mascota</mat-label>
+      <mat-select formControlName="id_mascota">
+        <mat-option *ngFor="let mascota of ListaMascotas" [value]="mascota.id">
+          {{ mascota.nombre }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldInvalid('id_mascota')">
+        {{ getErrorMessage('id_mascota') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Servicios -->
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('id_servicio')">
+      <mat-label>Servicios</mat-label>
+      <mat-select formControlName="id_servicio" multiple>
+        <mat-option *ngFor="let servicio of listaServicios" [value]="servicio.id">
+          {{ servicio.nombre }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldInvalid('id_servicio')">
+        {{ getErrorMessage('id_servicio') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Observaciones -->
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('observaciones')">
+      <mat-label>Observaciones</mat-label>
+      <input matInput formControlName="observaciones">
+      <mat-error *ngIf="isFieldInvalid('observaciones')">
+        {{ getErrorMessage('observaciones') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Motivo -->
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('motivo')">
+      <mat-label>Motivo</mat-label>
+      <input matInput formControlName="motivo">
+      <mat-error *ngIf="isFieldInvalid('motivo')">
+        {{ getErrorMessage('motivo') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Condición -->
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('condicion')">
+      <mat-label>Condición</mat-label>
+      <input matInput formControlName="condicion">
+      <mat-error *ngIf="isFieldInvalid('condicion')">
+        {{ getErrorMessage('condicion') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Vacunas -->
+    <mat-form-field appearance="fill" [class.error]="isFieldInvalid('vacunas')">
+      <mat-label>Vacunas</mat-label>
+      <input matInput formControlName="vacunas">
+      <mat-error *ngIf="isFieldInvalid('vacunas')">
+        {{ getErrorMessage('vacunas') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button mat-button type="button" (click)="onNoClick()">Cancelar</button>
+      <button mat-raised-button color="primary" [disabled]="!citaForm.valid">Crear Cita</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

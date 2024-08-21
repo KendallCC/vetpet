@@ -1,0 +1,17 @@
+.chart-card {
+    padding-top: 2rem;
+    max-width: 600px; /* Limita el ancho máximo de cada tarjeta */
+    margin: 20px auto; /* Centra la tarjeta y agrega espacio entre ellas */
+  }
+  
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  canvas {
+    max-width: 100%; /* Asegura que el canvas no exceda el ancho del contenedor */
+    height: 400px; /* Altura específica para los gráficos */
+  }
+  

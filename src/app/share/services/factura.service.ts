@@ -34,5 +34,8 @@ export class FacturaService {
     return this.http.put<void>(`${this.APIURL}/factura/carrito/${id}`,factura)
   }
 
+  deletefactura(Idfactura:number):Observable<any>{
+    return this.http.delete<any>(`${this.APIURL}/factura/${Idfactura}`)
+  }
 
 }

@@ -1,122 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { BehaviorSubject } from 'rxjs';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class CarritoService {
-//   private carritoProductos = new BehaviorSubject<any[]>(this.obtenerCarritoProductos());
-//   private carritoServicios = new BehaviorSubject<any[]>(this.obtenerCarritoServicios());
-
-//   carritoProductos$ = this.carritoProductos.asObservable();
-//   carritoServicios$ = this.carritoServicios.asObservable();
-
-//   agregarProducto(producto: any) {
-//     const productosActuales = this.obtenerCarritoProductos();
-//     const index = productosActuales.findIndex(item => item.id === producto.id);
-
-//     if (index === -1) {
-//       productosActuales.push(producto);
-//       this.guardarCarritoProductos(productosActuales);
-//       this.carritoProductos.next(productosActuales);
-//     }
-//   }
-
-//   agregarServicio(servicio: any) {
-//     const serviciosActuales = this.obtenerCarritoServicios();
-//     const index = serviciosActuales.findIndex(item => item.id === servicio.id);
-
-//     if (index === -1) {
-//       serviciosActuales.push(servicio);
-//       this.guardarCarritoServicios(serviciosActuales);
-//       this.carritoServicios.next(serviciosActuales);
-//     }
-//   }
-
-//   obtenerCarritoProductos(): any[] {
-//     return JSON.parse(localStorage.getItem('carrito')) || [];
-//   }
-
-//   obtenerCarritoServicios(): any[] {
-//     return JSON.parse(localStorage.getItem('selectedServices')) || [];
-//   }
-
-//   guardarCarritoProductos(productos: any[]) {
-//     localStorage.setItem('carrito', JSON.stringify(productos));
-//   }
-
-//   guardarCarritoServicios(servicios: any[]) {
-//     localStorage.setItem('selectedServices', JSON.stringify(servicios));
-//   }
-
-//   eliminarProducto(productId: number) {
-//     let productosActuales = this.obtenerCarritoProductos();
-//     productosActuales = productosActuales.filter(item => item.id !== productId);
-//     this.guardarCarritoProductos(productosActuales);
-//     this.carritoProductos.next(productosActuales);
-//   }
-
-//   eliminarServicio(servicioId: number) {
-//     let serviciosActuales = this.obtenerCarritoServicios();
-//     serviciosActuales = serviciosActuales.filter(item => item.id !== servicioId);
-//     this.guardarCarritoServicios(serviciosActuales);
-//     this.carritoServicios.next(serviciosActuales);
-//   }
-
-//   vaciarCarrito() {
-//     localStorage.removeItem('carrito');
-//     localStorage.removeItem('selectedServices');
-//     localStorage.removeItem('currentInvoiceId');
-//     this.carritoProductos.next([]);
-//     this.carritoServicios.next([]);
-//   }
-
-//   obtenerNumeroDeItems(): number {
-//     const productosCount = this.obtenerCarritoProductos().length;
-//     const serviciosCount = this.obtenerCarritoServicios().length;
-//     return productosCount + serviciosCount;
-//   }
-
-//   productoEnCarrito(productId: number): boolean {
-//     const productosActuales = this.obtenerCarritoProductos();
-//     return productosActuales.some(item => item.id === productId);
-//   }
-
-//   servicioEnCarrito(servicioId: number): boolean {
-//     const serviciosActuales = this.obtenerCarritoServicios();
-//     return serviciosActuales.some(item => item.id === servicioId);
-//   }
-
-//   actualizarProducto(producto: any) {
-//     const productosActuales = this.obtenerCarritoProductos();
-//     const index = productosActuales.findIndex(item => item.id === producto.id);
-
-//     if (index !== -1) {
-//       productosActuales[index] = producto;
-//       this.guardarCarritoProductos(productosActuales);
-//       this.carritoProductos.next(productosActuales);
-//     }
-//   }
-
-//   actualizarServicio(servicio: any) {
-//     const serviciosActuales = this.obtenerCarritoServicios();
-//     const index = serviciosActuales.findIndex(item => item.id === servicio.id);
-
-//     if (index !== -1) {
-//       serviciosActuales[index] = servicio;
-//       this.guardarCarritoServicios(serviciosActuales);
-//       this.carritoServicios.next(serviciosActuales);
-//     }
-//   }
-
-
-//   obtenerusuario(): any {
-//     return JSON.parse(localStorage.getItem('user')) || {};
-//   }
-
-// }
-
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CitasService } from './citas.service'; // Importa el servicio de citas
@@ -139,7 +20,7 @@ export class CarritoService {
   private citasManana = new BehaviorSubject<Cita[]>(this.obtenerCitasManana());
   citasManana$ = this.citasManana.asObservable();
 
-  constructor(private citasService: CitasService,private formservice:FormvalidationsService) {
+  constructor(private citasService: CitasService, private formservice: FormvalidationsService) {
     // Actualizar el contador y las citas al inicializar el servicio
     this.actualizarCitasPendientesCount();
     this.cargarCitasManana();
@@ -289,7 +170,27 @@ export class CarritoService {
       const citasActuales = this.obtenerCitasManana().filter(c => c.id !== cita.id);
       this.guardarCitasManana(citasActuales);
       this.actualizarCitasPendientesCount();
-      this.formservice.mensajeExito('se ha confirmado su cita','confimrmacion')
+      this.formservice.mensajeExito('Se ha confirmado su cita', 'Confirmación');
     });
+  }
+
+  cancelarCita(cita: Cita) {
+    cita.estado = 'Cancelada';
+    return this.citasService.confirmarCita(cita.id, cita).subscribe(() => {
+      const citasActuales = this.obtenerCitasManana().filter(c => c.id !== cita.id);
+      this.guardarCitasManana(citasActuales);
+      this.actualizarCitasPendientesCount();
+      this.formservice.mensajeExito('Se ha confirmado su cita', 'Confirmación');
+    });
+  }
+
+
+  // Método para hacer logout, borrar el local storage y resetear el contador
+  logout() {
+    this.vaciarCarrito();
+    localStorage.removeItem('user');
+    localStorage.removeItem('citasManana');
+    this.citasPendientesCount.next(0);
+    this.citasManana.next([]);
   }
 }

@@ -29,6 +29,7 @@ import { DetalleUsuarioComponent } from './usuario/DetalleUsuario/detalle-usuari
 import { UsuarioModule } from './usuario/usuario.module';
 
 import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask';
+import { ReportesModule } from './reportes/reportes.module';
 
 registerLocaleData(localEsCR, 'es');
 
@@ -52,18 +53,18 @@ const maskConfig: Partial<IConfig> = {
     CitaModule,
     CoreModule,
     SucursalModule,
-    
+    ReportesModule,    
     
     ServicesModule, 
     
     ShareModule,
     ProductModule,
     HomeModule,
+    UsuarioModule,
 
     //!Rutas de modulos
     AppRoutingModule,
-      UsuarioModule,
-   
+     
    
   
    

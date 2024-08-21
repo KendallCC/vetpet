@@ -6,7 +6,7 @@
     </mat-card-header>
     <mat-card-content>
       <p><strong>Mascota:</strong> {{ cita.mascota.nombre }} ({{ cita.mascota.especie }}, {{ cita.mascota.raza }})</p>
-      <p><strong>Fecha y Hora:</strong> {{ cita.hora_cita | date: 'fullDate' }} a las {{ cita.hora_cita | date: 'shortTime' }}</p>
+      <p><strong>Fecha y Hora:</strong> {{ cita.hora_cita | date: 'fullDate' }} a las {{ cita.hora_cita | date: 'hh:mm aa' }}</p>
       <p><strong>Sucursal:</strong> {{ cita.sucursal.nombre }} - {{ cita.sucursal.direccion }}</p>
       <p><strong>Observaciones:</strong> {{ cita.observaciones }}</p>
       <p><strong>Motivo:</strong> {{ cita.motivo }}</p>
@@ -18,13 +18,19 @@
       <button mat-raised-button color="primary" (click)="confirmarCita(cita)">
         Confirmar Cita
       </button>
+      <button mat-raised-button style="background-color: red;" (click)="confirmarCita(cita)">
+        Cancelar Cita
+      </button>
     </mat-card-actions>
   </mat-card>
   
-  <mat-card >
-    <div class="no-citas-container">
-      <mat-icon>calendar_today</mat-icon>
-      <p>No hay citas pendientes para mañana.</p>
-    </div>
-  </mat-card>
+  @if(citasManana.length<=0){
+    <mat-card >
+      <div class="no-citas-container">
+        <mat-icon>calendar_today</mat-icon>
+        <p>No hay citas pendientes para mañana.</p>
+      </div>
+    </mat-card>
+  }
+  
   

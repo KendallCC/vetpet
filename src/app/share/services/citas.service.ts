@@ -45,9 +45,7 @@ export class CitasService {
   }
   
 
-  deleteCita(Id:number):Observable<Cita>{
-    return this.http.delete<Cita>(`${this.APIURL}/cita/${Id}`)
-  }
+
 
   obtenerCitasHorariosYBloqueos(idUsuario: number): Observable<any> {
     return this.http.get<any>(`${this.APIURL}/cita/horariocitabloqueo/${idUsuario}`);

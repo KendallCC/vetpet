@@ -126,7 +126,9 @@ export class CarritoComponent implements OnInit {
       this.calculateTotal();
       this.cdr.detectChanges(); // Forzar la detección de cambios
       this.toastr.success(`Producto eliminado del carrito.`, 'Producto Eliminado');
+      this.checkEmptyCart();
     }
+
   }
 
   removeServicio(control: FormGroup): void {
@@ -137,6 +139,7 @@ export class CarritoComponent implements OnInit {
       this.calculateTotal();
       this.cdr.detectChanges(); // Forzar la detección de cambios
       this.toastr.success(`Servicio eliminado del carrito.`, 'Servicio Eliminado');
+      this.checkEmptyCart();
     }
   }
 
@@ -193,4 +196,27 @@ export class CarritoComponent implements OnInit {
   }
 
 
+
+  checkEmptyCart(): void {
+    if (this.detalleProductos.length === 0 && this.detalleServicios.length === 0) {
+      const facturaId = parseInt(localStorage.getItem('currentInvoiceId'));
+      if (facturaId) {
+        this.facturaService.deletefactura(facturaId).subscribe(() => {
+          this.toastr.info('Carrito vacío. La factura y las citas asociadas han sido eliminadas.', 'Carrito Vacío');
+          this.clearCart();
+          this.carritoService.vaciarCarrito();
+          this.Router.navigate(['inicio']);
+        }, error => {
+         
+          this.toastr.error('No se pudo eliminar la factura y las citas.', 'Error');
+        });
+      } else {
+        console.warn('Factura ID no encontrada en el localStorage.');
+        this.toastr.info('Carrito vacío. La factura no se ha generado', 'Carrito Vacío');
+        this.carritoService.vaciarCarrito()
+        this.Router.navigate(['inicio']);
+      }
+    }
+  }
+  
 }

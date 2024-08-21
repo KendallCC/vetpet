@@ -21,4 +21,9 @@ export class NotificacioncitaComponent {
   confirmarCita(cita: Cita): void {
     this.carritoService.confirmarCita(cita);
   }
+
+  cancelarCita(cita: Cita): void {
+    this.carritoService.cancelarCita(cita);
+  }
+
 }

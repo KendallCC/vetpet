@@ -11,6 +11,7 @@ import { listaServicios } from '../../../share/interfaces/servicio';
 import { FormvalidationsService } from '../../../share/formvalidations.service';
 import { MascotaService } from '../../../share/services/mascota.service';
 import { ListaMascota } from '../../../share/interfaces/mascota';
+import { CarritoService } from '../../../share/services/carrito.service';
 
 @Component({
   selector: 'app-agregar-editar-cita',
@@ -45,7 +46,8 @@ export class AgregarEditarCitaComponent implements OnInit {
     private sucursalService: SucursalService,
     private servicioService: ServicesService,
     private mascotaService: MascotaService,
-    public formValidation: FormvalidationsService
+    public formValidation: FormvalidationsService,
+    private carritoservice:CarritoService
   ) {
     this.citaForm = this.fb.group(
       {
@@ -103,6 +105,12 @@ export class AgregarEditarCitaComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerClientes();
     this.obtenerServicios();
+
+    const usuario = this.carritoservice.obtenerusuario();
+    if (usuario.rol === 'encargado') {
+      this.citaForm.get('estado').enable();
+    }
+
 
     if (this.data && this.data.idCita) {
       this.operacion = 'Editar';

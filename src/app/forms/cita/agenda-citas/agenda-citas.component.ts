@@ -26,6 +26,9 @@ export class AgendaCitasComponent implements OnInit {
     },
     events: [],
     businessHours: [],
+    validRange: {
+      start: new Date(), // Bloquear fechas anteriores a hoy
+    },
     selectable: true,
     selectMirror: true,
     select: this.handleDateSelect.bind(this),
@@ -50,6 +53,21 @@ export class AgendaCitasComponent implements OnInit {
   loadCalendarData(): void {
     const usuario = this.carritoService.obtenerusuario();
     const idUsuario = parseInt(usuario.id, 10);
+    const now = new Date();
+
+    // Agregar un evento "background" para las horas anteriores a la hora actual
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const events = [
+      {
+        title: 'Horas Pasadas',
+        start: startOfToday.toISOString(),
+        end: now.toISOString(),
+        display: 'background',
+        backgroundColor: '#ff9e9e', // Color de fondo para las horas pasadas
+      },
+    ];
 
     this.citasService.obtenerCitasHorariosYBloqueos(idUsuario).subscribe(
       (data) => {
@@ -58,7 +76,7 @@ export class AgendaCitasComponent implements OnInit {
         this.calendarOptions = {
           ...this.calendarOptions,
           businessHours: horariosLaborales,
-          events: [...citas, ...bloqueos],
+          events: [...events, ...citas, ...bloqueos], // Agregar eventos de bloqueos y citas
         };
       },
       (error) => {
@@ -69,12 +87,18 @@ export class AgendaCitasComponent implements OnInit {
 
   handleDateSelect(selectInfo: DateSelectArg): void {
     const usuario = this.carritoService.obtenerusuario();
+    const now = new Date();
 
-    // Verificar si el horario seleccionado ya está ocupado
+    // Verificar si la fecha y hora seleccionada es anterior a la actual
+    if (selectInfo.start < now) {
+      console.log('No se pueden registrar citas en una hora anterior a la actual.');
+      return;
+    }
+
     const overlappingEvent = selectInfo.view.calendar.getEvents().find(event => {
       return (
         event.extendedProps['esCitaPropia'] !== true && // Excluir las propias citas del cliente
-        event.start < selectInfo.end && 
+        event.start < selectInfo.end &&
         selectInfo.start < event.end // Verifica la superposición
       );
     });

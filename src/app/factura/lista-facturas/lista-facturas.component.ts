@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UsuarioService } from '../../share/services/usuario.service';
 import { GlobalService } from '../../share/services/global.service';
 import { Subscription } from 'rxjs';
+import { CarritoService } from '../../share/services/carrito.service';
 
 @Component({
   selector: 'app-lista-facturas',
@@ -36,7 +37,8 @@ export class ListaFacturasComponent implements AfterViewInit, OnDestroy {
     private usuarioService: UsuarioService,
     private globalService: GlobalService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private carritoservice:CarritoService
   ) {
     this.dataSource = new MatTableDataSource(this.ListFactura);
   }
@@ -82,12 +84,28 @@ export class ListaFacturasComponent implements AfterViewInit, OnDestroy {
   }
 
   getFacturas() {
+
+
+const user=this.carritoservice.obtenerusuario()
+if (user.rol!='adminstrador') {
+   // Obtiene la lista de facturas desde el servicio y las carga en la tabla.
+   this.service.getFacturas().subscribe({
+    next: (result) => {
+      console.log(result);
+      
+      this.ListFactura = result.filter(e=>e.cita.id_sucursal==this.idSucursal);
+      this.dataSource = new MatTableDataSource(this.ListFactura);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    },
+  });
+}
     // Obtiene la lista de facturas desde el servicio y las carga en la tabla.
     this.service.getFacturas().subscribe({
       next: (result) => {
         console.log(result);
         
-        this.ListFactura = result.filter(e=>e.cita.id_sucursal==this.idSucursal);
+        this.ListFactura = result;
         this.dataSource = new MatTableDataSource(this.ListFactura);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

@@ -113,9 +113,14 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['TablaUsuarios']);
   }
 
+  irReporte() {
+    this.router.navigate(['reportes']);
+  }
+
   logout() {
     this.authService.logout();
     this.carritoService.vaciarCarrito();
+    this.carritoService.logout()
     this.router.navigate(['/login']);
   }
 }

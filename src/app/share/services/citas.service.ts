@@ -28,6 +28,10 @@ export class CitasService {
     return this.http.get<listaCitas>(`${this.APIURL}/cita/sucursal/${Id}`)
   }
 
+  obtenerCitasParaMananaPorCliente(Id:number):Observable<listaCitas>{
+    return this.http.get<listaCitas>(`${this.APIURL}/cita/cliente/pendiente/${Id}`)
+  }
+
   postCita(cita:Cita):Observable <void> {
     return this.http.post<void>(`${this.APIURL}/cita/`,cita)
   }
@@ -36,8 +40,17 @@ export class CitasService {
     return this.http.put<Cita>(`${this.APIURL}/cita/${Id}`,cita)
   }
 
+  confirmarCita(Id:number,cita:Cita):Observable<Cita>{
+    return this.http.put<Cita>(`${this.APIURL}/cita/confirmarcita/${Id}`,cita)
+  }
+  
+
   deleteCita(Id:number):Observable<Cita>{
     return this.http.delete<Cita>(`${this.APIURL}/cita/${Id}`)
+  }
+
+  obtenerCitasHorariosYBloqueos(idUsuario: number): Observable<any> {
+    return this.http.get<any>(`${this.APIURL}/cita/horariocitabloqueo/${idUsuario}`);
   }
 
 }

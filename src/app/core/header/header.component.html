@@ -9,11 +9,38 @@
 
   <span class="example-spacer"></span>
 
+
+  <button mat-icon-button class="notification-button" (click)="irNotificaciones()">
+    <mat-icon>notifications</mat-icon>
+    <span class="notification-badge">{{citasPendientesCount}}</span>
+  </button>
+
+
+
+  @if (carritoCount > 0) {
+  <!-- Botón de Carrito de Compras -->
+  <button mat-icon-button class="cart-button" (click)="irCarrito()">
+    <mat-icon>shopping_cart</mat-icon>
+    <span class="cart-badge">{{ carritoCount }}</span>
+  </button>
+}
+
+
   <span mat-button [matMenuTriggerFor]="menuUser" class="options">{{nombre}}</span>
   <mat-menu #menuUser="matMenu">
     <div class="user-info">
       <button mat-menu-item disabled>{{correo}}</button>
       <mat-divider></mat-divider>
+
+
+      <ng-container *ngIf="rol === 'cliente'">
+        <button mat-menu-item [matMenuTriggerFor]="clienteMenu">Opciones</button>
+        <mat-menu #clienteMenu="matMenu">
+          <button mat-menu-item (click)="irFacturaCliente()">Facturas</button>
+          <button mat-menu-item (click)="irCitasCliente()">Agenda de citas</button>
+
+        </mat-menu>
+      </ng-container>
 
       <!-- Dropdown para Administrador -->
       <ng-container *ngIf="rol === 'administrador'">
@@ -21,6 +48,7 @@
         <mat-menu #adminMenu="matMenu">
           <button mat-menu-item (click)="irFactura()">Facturación</button>
           <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
+          <button mat-menu-item (click)="irCitasCliente()">Agenda de citas completa</button>
           <button mat-menu-item (click)="irMantenimientoServices()">Mantenimiento Servicios</button>
           <button mat-menu-item (click)="irMantenimientoProductos()">Mantenimiento Productos</button>
           <button mat-menu-item (click)="irMantenimientoSucursales()">Mantenimiento Sucursales</button>
@@ -35,6 +63,7 @@
         <mat-menu #encargadoMenu="matMenu">
           <button mat-menu-item (click)="irFactura()">Facturación</button>
           <button mat-menu-item (click)="irCitasEncargado()">Reservas</button>
+          <button mat-menu-item (click)="irCitasCliente()">Agenda de citas por sucursal</button>
           <button mat-menu-item (click)="irMantenimientoServices()">Mantenimiento Servicios</button>
           <button mat-menu-item (click)="irMantenimientoProductos()">Mantenimiento Productos</button>
           <button mat-menu-item (click)="irMantenimientoSucursales()">Mantenimiento Sucursales</button>

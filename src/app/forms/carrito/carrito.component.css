@@ -1,0 +1,14 @@
+.carrito-container {
+    padding: 20px;
+  }
+  
+  .total-section {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  

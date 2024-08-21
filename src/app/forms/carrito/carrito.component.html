@@ -1,0 +1,118 @@
+<div class="carrito-container" style="padding-bottom: 5rem;">
+  <form [formGroup]="facturaForm" (ngSubmit)="onSubmit()">
+    <h2>Carrito de Compras</h2>
+
+    <div class="resumen">
+      <div>
+        <label>Subtotal:</label>
+        <span>{{ subtotal | currency:'CRC' }}</span>
+      </div>
+      <div>
+        <label>Impuesto (13%):</label>
+        <span>{{ impuesto | currency:'CRC' }}</span>
+      </div>
+      <div>
+        <label>Total:</label>
+        <span>{{ total | currency:'CRC' }}</span>
+      </div>
+    </div>
+
+    <h3>Productos</h3>
+    <table mat-table [dataSource]="dataSourceProductos" class="mat-elevation-z8">
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.get('nombre').value }}
+        </td>
+      </ng-container>
+
+      <!-- Cantidad Column -->
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let item">
+          <input matInput type="number" [formControl]="item.get('cantidad')" (change)="editProducto(item)" />
+        </td>
+      </ng-container>
+
+      <!-- Precio Unitario Column -->
+      <ng-container matColumnDef="precio_unitario">
+        <th mat-header-cell *matHeaderCellDef>Precio Unitario</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.get('precio_unitario').value | currency:'CRC' }}
+        </td>
+      </ng-container>
+
+      <!-- Total Column -->
+      <ng-container matColumnDef="total_item">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.get('total_item').value | currency:'CRC' }}
+        </td>
+      </ng-container>
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-button color="warn" type="button" (click)="removeProducto(item)">Eliminar</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsProductos"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsProductos;"></tr>
+    </table>
+
+    <h3>Servicios</h3>
+    <table mat-table [dataSource]="dataSourceServicios" class="mat-elevation-z8">
+      <!-- Servicio Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Servicio</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.get('nombre').value }}
+        </td>
+      </ng-container>
+
+      <!-- Precio Unitario Column -->
+      <ng-container matColumnDef="precio_unitario">
+        <th mat-header-cell *matHeaderCellDef>Precio Unitario</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.get('precio_unitario').value | currency:'CRC' }}
+        </td>
+      </ng-container>
+
+      <!-- Total Column -->
+      <ng-container matColumnDef="total_item">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.get('total_item').value | currency:'CRC' }}
+        </td>
+      </ng-container>
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-button color="warn" type="button" (click)="removeServicio(item)">Eliminar</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsServicios"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsServicios;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    <h3>Detalles de Facturación</h3>
+    <mat-form-field appearance="fill">
+      <mat-label>Método de Pago</mat-label>
+      <mat-select formControlName="metodo_pago" required>
+        <mat-option value="Efectivo">Efectivo</mat-option>
+        <mat-option value="Tarjeta">Tarjeta</mat-option>
+        <mat-option value="Transferencia">Transferencia</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Finalizar Compra</button>
+  </form>
+</div>

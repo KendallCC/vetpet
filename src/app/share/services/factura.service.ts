@@ -22,8 +22,17 @@ export class FacturaService {
     return this.http.post<void>(`${this.APIURL}/factura/`,factura)
   }
 
+  postFacturaProductos(factura:any):Observable<void>{
+    return this.http.post<void>(`${this.APIURL}/factura/carrito/productos`,factura)
+  }
+
   updateFactura(id:number,factura:any):Observable<void>{
     return this.http.put<void>(`${this.APIURL}/factura/${id}`,factura)
   }
+
+  ActualizarFacturaYcitas(id:number,factura:any):Observable<void>{
+    return this.http.put<void>(`${this.APIURL}/factura/carrito/${id}`,factura)
+  }
+
 
 }

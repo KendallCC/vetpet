@@ -56,6 +56,11 @@ export class UsuarioLoginComponent implements OnInit{
 
           this.formuarioService.mensajeExito('Login exitoso', 'Inicio de sesión');
           
+
+
+          
+
+
           // Redirigir a la página de inicio
           this.router.navigate(['/inicio']);
         },

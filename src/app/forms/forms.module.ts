@@ -44,7 +44,10 @@ import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.com
 import { AgendaCitasComponent } from './cita/agenda-citas/agenda-citas.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AgregarCitaModalComponent } from './cita/agregar-cita-modal/agregar-cita-modal.component';
-
+import { CarritoComponent } from './carrito/carrito.component';
+import { NotificacioncitaComponent } from './cita/notificacioncita/notificacioncita.component';
+import { MatList, MatListItem } from '@angular/material/list';
+MatListItem
 
 
 @NgModule({
@@ -66,6 +69,8 @@ import { AgregarCitaModalComponent } from './cita/agregar-cita-modal/agregar-cit
     UsuarioLoginComponent,
     AgendaCitasComponent,
     AgregarCitaModalComponent,
+    CarritoComponent,
+    NotificacioncitaComponent,
    
    
 
@@ -90,8 +95,8 @@ import { AgregarCitaModalComponent } from './cita/agregar-cita-modal/agregar-cit
     MatGridListModule,
     NgxMaskDirective,  // Agregar directiva de máscara
     NgxMaskPipe,
-  
- 
+    MatList,
+    MatListItem
   ]
 })
 export class FormsModule { }

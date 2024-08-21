@@ -9,6 +9,8 @@ import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar
 import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.component';
 import { roleGuard } from '../auth/role.guard';
 import { AgendaCitasComponent } from './cita/agenda-citas/agenda-citas.component';
+import { CarritoComponent } from './carrito/carrito.component';
+import { NotificacioncitaComponent } from './cita/notificacioncita/notificacioncita.component';
 
 
 const routes: Routes = [
@@ -36,10 +38,20 @@ const routes: Routes = [
   {
     path: 'TablaUsuarios', component: TablausuariosComponent,
     canActivate: [roleGuard],
-    data: { roles: ['administrador', 'encargado'] }
+    data: { roles: ['administrador'] }
   },
   {
-    path: 'agendacita', component: AgendaCitasComponent
+    path: 'agendacita', component: AgendaCitasComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['administrador', 'encargado','cliente'] }
+  },
+  {
+    path: 'notificaciones', component: NotificacioncitaComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['cliente'] }
+  },
+  {
+    path: 'carrito', component: CarritoComponent
   },
   {
     path: 'Registrar', component: RegistrarUsuarioComponent

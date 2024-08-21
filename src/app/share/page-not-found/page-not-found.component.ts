@@ -11,7 +11,7 @@ export class PageNotFoundComponent implements OnInit {
   ngOnInit(): void { }
   irInicio() {
   // Redireccionar a la ruta raíz
-  this.router.navigate(['/']);
+  this.router.navigate(['/login']);
   }
   
 }

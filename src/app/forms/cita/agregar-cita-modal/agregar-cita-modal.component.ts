@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CitasService } from '../../../share/services/citas.service';
 import { MascotaService } from '../../../share/services/mascota.service';
-import { SucursalService } from '../../../share/services/sucursal.service';
 import { ServicesService } from '../../../share/services/services.service'; // Importar el servicio para obtener los servicios
 import { FormvalidationsService } from '../../../share/formvalidations.service';
+import { CarritoService } from '../../../share/services/carrito.service'; // Importar el servicio de carrito
 import { ListaMascota } from '../../../share/interfaces/mascota';
 import { listaServicios } from '../../../share/interfaces/servicio'; // Importar la interfaz para servicios
 
@@ -28,10 +28,11 @@ export class AgregarCitaModalComponent implements OnInit {
     private citaService: CitasService,
     private mascotaService: MascotaService,
     private servicioService: ServicesService,
+    private carritoService: CarritoService, // Inyectar CarritoService
     public formValidation: FormvalidationsService
   ) {
     const horaFormateada = this.formatearHora(data.hora); // Formatear la hora
-  
+
     this.citaForm = this.fb.group({
       fecha: [{ value: data.fecha, disabled: true }, Validators.required],
       hora_inicio: [{ value: horaFormateada, disabled: false }, Validators.required],
@@ -48,24 +49,31 @@ export class AgregarCitaModalComponent implements OnInit {
       condicion: ['', [Validators.required, Validators.minLength(5)]],
       vacunas: ['', [Validators.required, Validators.minLength(5)]],
     });
-  
+
     this.idSucursal = data.idSucursal;
-    console.log('id sucursal',this.idSucursal);
-    
   }
-  
 
   ngOnInit(): void {
     this.obtenerMascotasCliente(this.data.idCliente);
-    this.obtenerServicios();
-  
+    this.obtenerServicios().then(() => {
+      if (this.data.servicioId) {
+        const servicio=parseInt(this.data.servicioId)
+        this.citaForm.patchValue({
+          id_servicio: [servicio] // Preseleccionar el servicio
+        });
+        
+        this.selectedServicios = [this.listaServicios.find((s) => s.id === servicio)];
+        this.recalcularDuracionYPrecio();
+      }
+    });
+
     this.citaForm.get('id_servicio').valueChanges.subscribe((servicioIds) => {
       this.selectedServicios = servicioIds.map((id) =>
         this.listaServicios.find((s) => s.id === id)
       );
       this.recalcularDuracionYPrecio();
     });
-  
+
     this.citaForm.get('hora_inicio').valueChanges.subscribe(() => {
       this.updateHoraFin();
     });
@@ -82,18 +90,14 @@ export class AgregarCitaModalComponent implements OnInit {
     });
   }
 
-  obtenerServicios(): void {
-    this.servicioService.getServices().subscribe((servicios) => {
-      this.listaServicios = servicios;
-    });
+  async obtenerServicios(): Promise<void> {
+    this.listaServicios = await this.servicioService.getServices().toPromise();
   }
 
   recalcularDuracionYPrecio(): void {
     if (this.selectedServicios.length) {
       const totalDuration = this.selectedServicios.reduce((total, servicio) => {
-        const duration = this.convertirTiempoServicioADuracion(
-          servicio.tiempo_servicio
-        );
+        const duration = this.convertirTiempoServicioADuracion(servicio.tiempo_servicio);
         return total + duration;
       }, 0);
       const totalPrice = this.selectedServicios.reduce(
@@ -129,9 +133,7 @@ export class AgregarCitaModalComponent implements OnInit {
     if (horaInicio && this.selectedServicios.length) {
       const [hours, minutes] = horaInicio.split(':').map(Number);
       const totalDuration = this.selectedServicios.reduce((total, servicio) => {
-        const duration = this.convertirTiempoServicioADuracion(
-          servicio.tiempo_servicio
-        );
+        const duration = this.convertirTiempoServicioADuracion(servicio.tiempo_servicio);
         return total + duration;
       }, 0);
 
@@ -151,14 +153,14 @@ export class AgregarCitaModalComponent implements OnInit {
       const fecha = new Date(this.data.fecha); // La fecha proporcionada en los datos del modal
       const hora = this.citaForm.get('hora_inicio')?.value.split(':'); // Obtener la hora del formulario
       fecha.setHours(parseInt(hora[0], 10), parseInt(hora[1], 10)); // Establece la hora en la fecha
-  
+
       // Ajustar la fecha a la zona horaria de Costa Rica (UTC-6)
       const offsetMs = fecha.getTimezoneOffset() * 60000; // Desajuste en milisegundos
       const fechaCostaRica = new Date(fecha.getTime() - offsetMs + (6 * 60 * 60000)); // Ajuste a UTC-6
-  
+
       // Convierte la fecha completa a formato ISO
       const fechaISO = fechaCostaRica.toISOString();
-  
+
       const nuevaCita = {
         ...this.citaForm.value,
         id_sucursal: this.idSucursal,
@@ -166,11 +168,18 @@ export class AgregarCitaModalComponent implements OnInit {
         estado: 'Pendiente', // Establecer el estado predeterminado
         fecha: fechaISO, // Fecha completa en formato ISO ajustada a UTC-6
       };
-  
+
       console.log('Esta es la nueva cita ', nuevaCita);
-  
+
+      // Guardar los servicios seleccionados en el carrito usando el CarritoService
+      this.selectedServicios.forEach(servicio => {
+        this.carritoService.agregarServicio(servicio);
+      });
+
       this.citaService.postCita(nuevaCita).subscribe(
-        () => {
+        (response: any) => {
+          console.log(response);
+          localStorage.setItem('currentInvoiceId', response.nuevaFactura.id.toString());
           this.dialogRef.close(true);
           this.formValidation.mensajeExito('Cita agregada con éxito', 'Agregar');
         },

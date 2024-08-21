@@ -1,24 +1,23 @@
-@if (producto) {
-    <div class="product-detail-container">
-        <h1 class="product-name">{{producto.nombre}}</h1>
-        <p class="product-brand"><strong>Marca:</strong> {{producto.Marca}}</p>
-        <p class="product-category"><strong>Categoría:</strong> {{producto.categoria.nombre}}</p>
-        <p class="product-description"><strong>Descripción:</strong> {{producto.descripcion}}</p>
-        <p class="product-price"><strong>Precio:</strong> {{producto.precio| currency : "CRC":undefined:'3.0'}}</p>
-        <p class="product-type"><strong>Tipo de Mascota:</strong> {{producto.Tipo_mascota}}</p>
-    
-        <div class="conteneedorcompra">
-            <button class="cta">
-                <span class="hover-underline-animation"> Comprar </span>
-                <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10" viewBox="0 0 46 16">
-                    <path id="Path_10" data-name="Path 10"
-                        d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" transform="translate(30)">
-                    </path>
-                </svg>
-            </button>
-    
-        </div>
-    
-    
+<div class="product-detail-container" *ngIf="producto">
+    <h1 class="product-name">{{producto.nombre}}</h1>
+    <p class="product-brand"><strong>Marca:</strong> {{producto.Marca}}</p>
+    <p class="product-category"><strong>Categoría:</strong> {{producto.categoria.nombre}}</p>
+    <p class="product-description"><strong>Descripción:</strong> {{producto.descripcion}}</p>
+    <p class="product-price"><strong>Precio:</strong> {{producto.precio | currency : "CRC":undefined:'3.0'}}</p>
+    <p class="product-type"><strong>Tipo de Mascota:</strong> {{producto.Tipo_mascota}}</p>
+  
+    <div class="contenedor-compra">
+      <button class="cta" *ngIf="!enCarrito" (click)="agregarAlCarrito()">
+        <span class="hover-underline-animation"> Comprar </span>
+        <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10" viewBox="0 0 46 16">
+          <path id="Path_10" data-name="Path 10"
+                d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" transform="translate(30)">
+          </path>
+        </svg>
+      </button>
+      <button class="cta" *ngIf="enCarrito" disabled>
+        <span class="hover-underline-animation"> Producto en Carrito </span>
+      </button>
     </div>
-}
+  </div>
+  

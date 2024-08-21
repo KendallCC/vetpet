@@ -1,3 +1,72 @@
+.cart-button {
+  position: relative;
+  margin-right: 2rem;
+  background-color: #3c4562; /* Color de fondo */
+  border: none;
+  cursor: pointer;
+  padding: 8px; /* Añadir algo de padding para que se vea mejor */
+}
+
+.cart-button mat-icon {
+  font-size: 24px; /* Tamaño del ícono */
+  color: #ffffff; /* Color negro para el ícono */
+}
+
+/* Estilo para la burbuja del contador en el carrito */
+.cart-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff5722; /* Color de fondo de la burbuja */
+  color: white; /* Color del texto */
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Ajustes adicionales */
+.options {
+  cursor: pointer;
+  margin-top: 16px; /* Ajustar para alinear mejor con el texto */
+  font-size: 0.99rem;
+}
+
+.options:hover {
+  background-color: #7f879b;
+}
+
+
+.notification-button {
+  position: relative;
+  margin-right: 1rem;
+  background-color: #3c4562; /* Color de fondo */
+  border: none;
+  cursor: pointer;
+  padding: 8px; /* Añadir algo de padding para que se vea mejor */
+}
+
+.notification-button mat-icon {
+  font-size: 24px; /* Tamaño del ícono */
+  color: #ffffff; /* Color para el ícono */
+}
+
+/* Estilo para la burbuja del contador en el ícono de notificaciones */
+.notification-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff5722; /* Color de fondo de la burbuja */
+  color: white; /* Color del texto */
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+
+
 .toolbar-title {
  
   margin-left: 1rem;

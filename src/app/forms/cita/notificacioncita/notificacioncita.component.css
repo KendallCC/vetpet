@@ -1,0 +1,32 @@
+.cita-card {
+    margin-bottom: 20px;
+  }
+  
+  .mat-card-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mat-card-title mat-icon {
+    margin-right: 10px;
+  }
+  
+  .no-citas-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  
+  .no-citas-container mat-icon {
+    font-size: 48px;
+    color: #ccc;
+  }
+  
+  .no-citas-container p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #666;
+  }
+  

@@ -1,0 +1,50 @@
+button {
+    font-size: 17px;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    background: #45568d;
+    color: white;
+    border-radius: 4px;
+   }
+   
+   button:hover {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(30,144,255,1) 0%, rgba(0,212,255,1) 100%);
+   }
+   
+   button:active {
+    transform: translate(0em, 0.2em);
+   }
+
+   .add{
+    margin-left: 1rem;
+    background-color: #28a745;
+   }
+
+   .edit{
+    margin-left: 1rem;
+    background-color: #142fca;
+   }
+
+ .mat-mdc-form-field {
+    font-size: 14px;
+    width: 90%;
+  }
+  
+   .mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell{
+    padding: 1rem;
+  }
+  
+  
+  .mat-mdc-header-cell {
+    font-weight: bolder;
+    margin: 0 auto;
+  }
+  
+  .contenedor{ 
+    display: flex; 
+    justify-content: center;
+    background-color: #ffffff;
+    margin-top: 5rem;
+  }

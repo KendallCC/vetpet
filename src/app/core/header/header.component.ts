@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../share/services/auth.service';
+import { CarritoService } from '../../share/services/carrito.service';
+import { combineLatest } from 'rxjs';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
 
   nombre: string = '';
   correo: string = '';
   rol: string = '';
-
-  constructor(private router: Router,private authService: AuthService) { } 
+  carritoCount: number = 0;
+  citasPendientesCount: number = 0;
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private carritoService: CarritoService
+  ) { }
 
   ngOnInit(): void {
     this.authService.user.subscribe(user => {
@@ -26,57 +34,88 @@ export class HeaderComponent implements OnInit{
         this.rol = '';
       }
     });
+
+    this.carritoService.citasPendientesCount$.subscribe(count => {
+      this.citasPendientesCount = count;
+    });
+
+    // Suscribirse a los observables del carrito para productos y servicios
+    combineLatest([
+      this.carritoService.carritoProductos$,
+      this.carritoService.carritoServicios$
+    ]).subscribe(([productos, servicios]) => {
+      this.carritoCount = productos.length + servicios.length;
+    });
   }
 
-  irAcerca(){
-    this.router.navigate(['acerca'])
+  irCarrito() {
+    this.router.navigate(['carrito']);
   }
 
-  irinicio(){
-    this.router.navigate(['/'])
+  irNotificaciones(){
+    this.router.navigate(['notificaciones']);
   }
 
-  irProducto(){
-    this.router.navigate(['productos'])
+  irAcerca() {
+    this.router.navigate(['acerca']);
   }
+
+  irinicio() {
+    this.router.navigate(['/']);
+  }
+
+  irProducto() {
+    this.router.navigate(['productos']);
+  }
+
+  irServicios() {
+    this.router.navigate(['listaServicios']);
+  }
+
+  irFactura() {
+    this.router.navigate(['factura']);
+  }
+
+  irFacturaCliente() {
+    this.router.navigate(['Clientefacturas']);
+  }
+
+
+
+  irCitasEncargado() {
+    this.router.navigate(['listaCitasEncargado']);
+  }
+
+  irCitasCliente() {
+    this.router.navigate(['agendacita']);
+  }
+
+
   
-  irServicios(){
-    this.router.navigate(['listaServicios'])
+
+  irMantenimientoServices() {
+    this.router.navigate(['tablaServicios']);
   }
 
-  irFactura(){
-    this.router.navigate(['factura'])
-  }
-  
-  irCitasEncargado(){
-    this.router.navigate(['listaCitasEncargado'])
-  }
-  
-
-
-  irMantenimientoServices(){
-    this.router.navigate(['tablaServicios'])
+  irMantenimientoProductos() {
+    this.router.navigate(['tablaProductos']);
   }
 
-  irMantenimientoProductos(){
-    this.router.navigate(['tablaProductos'])
+  irMantenimientoSucursales() {
+    this.router.navigate(['tablaSucursales']);
   }
 
-  irMantenimientoSucursales(){
-    this.router.navigate(['tablaSucursales'])
+  irMantenimientoHorarios() {
+    this.router.navigate(['tablabBloqueoHorario']);
   }
 
-  irMantenimientoHorarios(){
-    this.router.navigate(['tablabBloqueoHorario'])
-  }
-
-  irMantenimientoUsuarios(){
-    this.router.navigate(['TablaUsuarios'])
+  irMantenimientoUsuarios() {
+    this.router.navigate(['TablaUsuarios']);
   }
 
   logout() {
     this.authService.logout();
+    this.carritoService.vaciarCarrito();
     this.router.navigate(['/login']);
   }
-
 }
